@@ -74,67 +74,16 @@ Global $g_iOnAccountSince = 0
 Global $g_icmbMaxStayDelay = 2, $g_bForceSwitch = False, $g_icmbMinDelayToSwitch = 2
 Global $g_iMaxStayDelay = 0, $g_iMinDelayToSwitch
 
-; ================================================== AUTO UPGRADE PART ================================================== ;
-
-Global $g_ichkAutoUpgrade = 0
-Global $g_iSmartMinGold = 150000, $g_iSmartMinElixir = 150000, $g_iSmartMinDark = 1500
-Global $g_ichkUpgradesToIgnore[13] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global $g_ichkResourcesToIgnore[3] = [0, 0, 0]
-Global $g_iCurrentLineOffset = 0, $g_iNextLineOffset = 0
-Global $g_aUpgradeNameLevel ; [Nb of elements in Array, Name, Level]
-Global $g_aUpgradeResourceCostDuration[3] = ["", "", ""] ; Resource, Cost, Duration
-
 ; ================================================== CSV SPEED PART ================================================== ;
 
 Global $cmbCSVSpeed[2] = [$LB, $DB]
 Global $icmbCSVSpeed[2] = [2, 2]
 Global $g_CSVSpeedDivider = 1
 
-; ================================================== BB FEATURES PART ================================================== ;
-
-Global $g_iAttacksAvailable = 0
-Global $g_ichkCollectBldGE = 0, $g_ichkCollectBldGems = 0
-Global $g_ichkActivateClockTower = 0
-Global $g_iGoldBB = 0, $g_iElixirBB = 0, $g_iTrophiesBB = 0, $g_aBuilder[2] = [0,0]
-
 ; ================================================== UNICODE SEND TEXT PART ================================================== ;
 
 Global $bCanUseUnicodeKeyboard = False
 Global $g_iChkRequestUnicode = 0
-
-; ================================================== Drop order troops by Kychera ================================================== ;
-
-Global Enum $eTroopBarbarianS, $eTroopArcherS, $eTroopGiantS, $eTroopGoblinS, $eTroopWallBreakerS, $eTroopBalloonS, _
-		$eTroopWizardS, $eTroopHealerS, $eTroopDragonS, $eTroopPekkaS, $eTroopBabyDragonS, $eTroopMinerS, _
-		$eTroopMinionS, $eTroopHogRiderS, $eTroopValkyrieS, $eTroopGolemS, $eTroopWitchS, _
-		$eTroopLavaHoundS, $eTroopBowlerS, $eHeroeS, $eCCS, $eTroopCountDrop
-;Global Enum $eTroopCountDrop = 21
-Global $icmbDropTroops[$eTroopCountDrop] = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
-Global Const $g_asTroopNamesPluralDrop[$eTroopCountDrop] = ["Barbarians", "Archers", "Giants", "Goblins", "Wall Breakers", "Balloons", "Wizards", "Healers", "Dragons", "Pekkas", "Baby Dragons", "Miners", "Minions", "Hog Riders", "Valkyries", "Golems", "Witches", "Lava Hounds", "Bowlers", "Clan Castle", "Heroes"]
-
-Global Const $g_aiTroopOrderDropIcon[23] = [ _
-		$eIcnOptions, $eIcnBarbarian, $eIcnArcher, $eIcnGiant, $eIcnGoblin, $eIcnWallBreaker, $eIcnBalloon, _
-		$eIcnWizard, $eIcnHealer, $eIcnDragon, $eIcnPekka, $eIcnBabyDragon, $eIcnMiner, $eIcnMinion, _
-		$eIcnHogRider, $eIcnValkyrie, $eIcnGolem, $eIcnWitch, $eIcnLavaHound, $eIcnBowler, $eIcnCC, $eIcnHeroes]
-
-Global $g_hChkCustomTrainDropOrderEnable = 0
-Global $g_bCustomTrainDropOrderEnable = False
-Global $g_hBtnRemoveTroops2, $g_hBtnTroopOrderSet2
-Global $g_ahImgTroopDropOrderSet = 0
-Global $g_ahImgTroopDropOrder[$eTroopCountDrop] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-Global $cmbDropTroops = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-Global Const $g_asTroopDropList[] = [ "", _
-  "Barbarians", "Archers","Giants", "Goblins", _
-   "Wall Breakers", "Balloons", "Wizards", "Healers", _
-   "Dragons", "Pekkas", "Baby Dragons", "Miners", _
-   "Minions", "Hog Riders", "Valkyries", "Golems", _
-   "Witches","Lava Hounds", "Bowlers", "Clan Castle", "Heroes"]
-
-GloBal $g_iSlotsGiants
-
-; Ezeck0001
-
-Global $g_hCurrentDonateButtonBitMap = 0
 
 ; ================================================== Goblin XP PART ================================================== ;
 

@@ -85,6 +85,6 @@ Func Collect($bCheckTreasury = True)
 		SetLog("No Loot Cart found on your Village", $COLOR_SUCCESS)
 	EndIf
 
-	If $g_bChkTreasuryCollect And $bCheckTreasury Then TreasuryCollect()
+	;PICO MOD If $g_bChkTreasuryCollect And $bCheckTreasury Then TreasuryCollect()
 	EndGainCost("Collect")
 EndFunc   ;==>Collect

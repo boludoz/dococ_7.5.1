@@ -707,6 +707,7 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 		Case $g_hGUI_ATTACK_TAB
 			tabAttack()
         Case $g_hGUI_MOD_TAB ; PICO MOD
+		    ;tabMOD()
 		Case $g_hGUI_SEARCH_TAB
 			tabSEARCH()
 		Case $g_hGUI_DEADBASE_TAB
@@ -1668,7 +1669,6 @@ Func tabMain()
                 GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
                 tabAttack()
 
-            Case $tabidx = 3 ; Options
 ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
             Case $tabidx = 3 ; MOD
                 GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
@@ -2019,13 +2019,6 @@ Func Bind_ImageList($nCtrl, ByRef $hImageList)
 		Case $g_hTabMain
 			; the icons for main tab
             Local $aIconIndex = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnPMOD, $eIcnGUI, $eIcnInfo] ; PICO MOD
-			
-; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-        Case $g_hGUI_MOD_TAB
-            ; the icons for MOD tab
-            Local $aIconIndex = [$eIcnProfileSwitch, $eIcnCoin, $eIcnBrain, $eIcnUpgrade, $eIcnBldHead, $eIcnGoblinXP]
-; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-
 
 		Case $g_hGUI_VILLAGE_TAB
 			; the icons for village tab
@@ -2073,6 +2066,10 @@ Func Bind_ImageList($nCtrl, ByRef $hImageList)
 		Case $g_hGUI_ATTACKOPTION_TAB
 			; the icons for Attack Options tab
 			Local $aIconIndex = [$eIcnMagnifier, $eIcnCamp, $eIcnLightSpell, $eIcnSilverStar, $eIcnTrophy]
+
+			Case $g_hGUI_MOD_TAB
+            ; the icons for MOD tab
+            Local $aIconIndex = [$eIcnProfileSwitch, $eIcnCoin, $eIcnBrain, $eIcnUpgrade, $eIcnBldHead, $eIcnGoblinXP]
 
 		Case $g_hGUI_BOT_TAB
 			; the icons for Bot tab

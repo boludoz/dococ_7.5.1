@@ -66,13 +66,14 @@ Func GemClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 
 EndFunc   ;==>GemClick
 
-Func randomSleep($SleepTime, $Range = 0)
-	If $g_bRunState = False Then Return
-	If $Range = 0 Then $Range = Round($SleepTime / 5)
-	Local $SleepTimeF = Random($SleepTime - $Range, $SleepTime + $Range, 1)
-	If $g_iDebugClick = 1 Then Setlog("Default sleep : " & $SleepTime & " - Random sleep : " & $SleepTimeF, $COLOR_ORANGE)
-	If _Sleep($SleepTimeF) Then Return
-EndFunc   ;==>randomSleep
+; Func randomSleep($SleepTime, $Range = 0)
+; 	If $g_bRunState = False Then Return
+; 	If $Range = 0 Then $Range = Round($SleepTime / 5)
+; 	Local $SleepTimeF = Random($SleepTime - $Range, $SleepTime + $Range, 1)
+; 	If $g_iDebugClick = 1 Then Setlog("Default sleep : " & $SleepTime & " - Random sleep : " & $SleepTimeF, $COLOR_ORANGE)
+; 	If _Sleep($SleepTimeF) Then Return
+; 
+; EndFunc   ;==>randomSleep
 
 ; ================================================== HUMAN FUNCTIONS PART ================================================== ;
 

@@ -65,43 +65,10 @@ Func ReadConfig_PicoMod()
 	IniReadS($g_icmbMaxActionsNumber, $g_sProfileConfigPath, "Pico Bot Humanization", "cmbMaxActionsNumber", $g_icmbMaxActionsNumber, "Int")
 	IniReadS($g_ichallengeMessage, $g_sProfileConfigPath, "Pico Bot Humanization", "challengeMessage", $g_ichallengeMessage)
 
-	; ================================================== AUTO UPGRADE PART ================================================== ;
-
-	IniReadS($g_ichkAutoUpgrade, $g_sProfileConfigPath, "Pico Auto Upgrade", "chkAutoUpgrade", $g_ichkAutoUpgrade, "Int")
-	For $i = 0 To 12
-		IniReadS($g_ichkUpgradesToIgnore[$i], $g_sProfileConfigPath, "Pico Auto Upgrade", "chkUpgradesToIgnore[" & $i & "]", $g_ichkUpgradesToIgnore[$i], "Int")
-	Next
-	For $i = 0 To 2
-		IniReadS($g_ichkResourcesToIgnore[$i], $g_sProfileConfigPath, "Pico Auto Upgrade", "chkResourcesToIgnore[" & $i & "]", $g_ichkResourcesToIgnore[$i], "Int")
-	Next
-	IniReadS($g_iSmartMinGold, $g_sProfileConfigPath, "Pico Auto Upgrade", "SmartMinGold", $g_iSmartMinGold, "Int")
-	IniReadS($g_iSmartMinElixir, $g_sProfileConfigPath, "Pico Auto Upgrade", "SmartMinElixir", $g_iSmartMinElixir, "Int")
-	IniReadS($g_iSmartMinDark, $g_sProfileConfigPath, "Pico Auto Upgrade", "SmartMinDark", $g_iSmartMinDark, "Int")
-
-	; ================================================== BB FEATURES PART ================================================== ;
-
-	IniReadS($g_ichkCollectBldGE, $g_sProfileConfigPath, "Pico BB Features", "g_chkCollectBldGE", $g_ichkCollectBldGE, "Int")
-	IniReadS($g_ichkCollectBldGems, $g_sProfileConfigPath, "Pico BB Features", "g_chkCollectBldGems", $g_ichkCollectBldGems, "Int")
-	IniReadS($g_ichkActivateClockTower, $g_sProfileConfigPath, "Pico BB Features", "g_chkActivateClockTower", $g_ichkActivateClockTower, "Int")
-
-	IniReadS($g_ichkBBSuggestedUpgrades, $g_sProfileConfigPath, "Pico BB Features", "g_chkBBSuggestedUpgrades", $g_ichkBBSuggestedUpgrades, "Int")
-	IniReadS($g_ichkBBSuggestedUpgradesIgnoreGold, $g_sProfileConfigPath, "Pico BB Features", "g_chkBBSuggestedUpgradesIgnoreGold", $g_ichkBBSuggestedUpgradesIgnoreGold, "Int")
-	IniReadS($g_ichkBBSuggestedUpgradesIgnoreElixir, $g_sProfileConfigPath, "Pico BB Features", "g_chkBBSuggestedUpgradesIgnoreElixir", $g_ichkBBSuggestedUpgradesIgnoreElixir, "Int")
-	IniReadS($g_ichkBBSuggestedUpgradesIgnoreHall, $g_sProfileConfigPath, "Pico BB Features", "g_chkBBSuggestedUpgradesIgnoreHall", $g_ichkBBSuggestedUpgradesIgnoreHall, "Int")
-
-	IniReadS($g_ichkPlacingNewBuildings, $g_sProfileConfigPath, "Pico BB Features", "g_chkPlacingNewBuildings", $g_ichkPlacingNewBuildings, "Int")
-
 	; ================================================== CSV SPEED PART ================================================== ;
 
 	IniReadS($icmbCSVSpeed[$LB], $g_sProfileConfigPath, "Pico CSV Speed", "cmbCSVSpeed[LB]", $icmbCSVSpeed[$LB], "Int")
 	IniReadS($icmbCSVSpeed[$DB], $g_sProfileConfigPath, "Pico CSV Speed", "cmbCSVSpeed[DB]", $icmbCSVSpeed[$DB], "Int")
-
-	; ================================================== CUSTOM DROP ORDER ================================================== ;kychera
-
-	IniReadS($g_bCustomTrainDropOrderEnable, $g_sProfileConfigPath, "Pico DropOrder", "chkTroopDropOrder", $g_bCustomTrainDropOrderEnable, "Bool")
-	For $p = 0 To UBound($icmbDropTroops) - 1
-		IniReadS($icmbDropTroops[$p], $g_sProfileConfigPath, "Pico DropOrder", "cmbDropTroops[" & $p & "]", $icmbDropTroops[$p] , "Int")
-	Next
 
 	; ================================================== Super XP PART ================================================== ;
 
@@ -165,43 +132,10 @@ Func SaveConfig_PicoMod()
 	_Ini_Add("Pico Bot Humanization", "cmbMaxActionsNumber", _GUICtrlComboBox_GetCurSel($g_cmbMaxActionsNumber))
 	_Ini_Add("Pico Bot Humanization", "challengeMessage", GUICtrlRead($g_challengeMessage))
 
-	; ================================================== AUTO UPGRADE PART ================================================== ;
-
-	_Ini_Add("Pico Auto Upgrade", "chkAutoUpgrade", $g_ichkAutoUpgrade)
-	For $i = 0 To 12
-		_Ini_Add("Pico Auto Upgrade", "chkUpgradesToIgnore[" & $i & "]", $g_ichkUpgradesToIgnore[$i])
-	Next
-	For $i = 0 To 2
-		_Ini_Add("Pico Auto Upgrade", "chkResourcesToIgnore[" & $i & "]", $g_ichkResourcesToIgnore[$i])
-	Next
-	_Ini_Add("Pico Auto Upgrade", "SmartMinGold", GUICtrlRead($g_SmartMinGold))
-	_Ini_Add("Pico Auto Upgrade", "SmartMinElixir", GUICtrlRead($g_SmartMinElixir))
-	_Ini_Add("Pico Auto Upgrade", "SmartMinDark", GUICtrlRead($g_SmartMinDark))
-
-	; ================================================== BB FEATURES PART ================================================== ;
-
-	_Ini_Add("Pico BB Features", "g_chkCollectBldGE", $g_ichkCollectBldGE)
-	_Ini_Add("Pico BB Features", "g_chkCollectBldGems", $g_ichkCollectBldGems)
-	_Ini_Add("Pico BB Features", "g_chkActivateClockTower", $g_ichkActivateClockTower)
-
-	_Ini_Add("Pico BB Features", "g_chkBBSuggestedUpgrades", $g_ichkBBSuggestedUpgrades)
-	_Ini_Add("Pico BB Features", "g_chkBBSuggestedUpgradesIgnoreGold", $g_ichkBBSuggestedUpgradesIgnoreGold)
-	_Ini_Add("Pico BB Features", "g_chkBBSuggestedUpgradesIgnoreElixir", $g_ichkBBSuggestedUpgradesIgnoreElixir)
-	_Ini_Add("Pico BB Features", "g_chkBBSuggestedUpgradesIgnoreHall", $g_ichkBBSuggestedUpgradesIgnoreHall)
-
-	_Ini_Add("Pico BB Features", "g_chkPlacingNewBuildings", $g_ichkPlacingNewBuildings)
-
 	; ================================================== CSV SPEED PART ================================================== ;
 
 	_Ini_Add("Pico CSV Speed", "cmbCSVSpeed[LB]", _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$LB]))
 	_Ini_Add("Pico CSV Speed", "cmbCSVSpeed[DB]", _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$DB]))
-
-	; ================================================== CUSTOM DROP ORDER ================================================== ;kychera
-
-	_Ini_Add("Pico DropOrder", "chkTroopDropOrder", $g_bCustomTrainDropOrderEnable)
-	For $p = 0 To UBound($icmbDropTroops) - 1
-		_Ini_Add("Pico DropOrder", "cmbDropTroops[" & $p & "]", _GUICtrlComboBox_GetCurSel($cmbDropTroops[$p]))
-	Next
 
 	; ================================================== Super XP PART ================================================== ;
 
@@ -269,43 +203,10 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			$g_icmbMaxActionsNumber = _GUICtrlComboBox_GetCurSel($g_icmbMaxActionsNumber)
 			$g_ichallengeMessage = GUICtrlRead($g_challengeMessage)
 
-			; ================================================== AUTO UPGRADE PART ================================================== ;
-
-			$g_ichkAutoUpgrade = GUICtrlRead($g_chkAutoUpgrade) = $GUI_CHECKED ? 1 : 0
-			For $i = 0 To 12
-				$g_ichkUpgradesToIgnore[$i] = GUICtrlRead($g_chkUpgradesToIgnore[$i]) = $GUI_CHECKED ? 1 : 0
-			Next
-			For $i = 0 To 2
-				$g_ichkResourcesToIgnore[$i] = GUICtrlRead($g_chkResourcesToIgnore[$i]) = $GUI_CHECKED ? 1 : 0
-			Next
-			$g_iSmartMinGold = GUICtrlRead($g_SmartMinGold)
-			$g_iSmartMinElixir = GUICtrlRead($g_SmartMinElixir)
-			$g_iSmartMinDark = GUICtrlRead($g_SmartMinDark)
-
-			; ================================================== BB FEATURES PART ================================================== ;
-
-			$g_ichkCollectBldGE = GUICtrlRead($g_chkCollectBldGE) = $GUI_CHECKED ? 1 : 0
-			$g_ichkCollectBldGems = GUICtrlRead($g_chkCollectBldGems) = $GUI_CHECKED ? 1 : 0
-			$g_ichkActivateClockTower = GUICtrlRead($g_chkActivateClockTower) = $GUI_CHECKED ? 1 : 0
-
-			$g_ichkBBSuggestedUpgrades = (GUICtrlRead($g_chkBBSuggestedUpgrades) = $GUI_CHECKED) ? 1 : 0
-			$g_ichkBBSuggestedUpgradesIgnoreGold = (GUICtrlRead($g_chkBBSuggestedUpgradesIgnoreGold) = $GUI_CHECKED) ? 1 : 0
-			$g_ichkBBSuggestedUpgradesIgnoreElixir = (GUICtrlRead($g_chkBBSuggestedUpgradesIgnoreElixir) = $GUI_CHECKED) ? 1 : 0
-			$g_ichkBBSuggestedUpgradesIgnoreHall = (GUICtrlRead($g_chkBBSuggestedUpgradesIgnoreHall) = $GUI_CHECKED) ? 1 : 0
-
-			$g_ichkPlacingNewBuildings = (GUICtrlRead($g_chkPlacingNewBuildings) = $GUI_CHECKED) ? 1 : 0
-
 			; ================================================== CSV SPEED PART ================================================== ;
 
 			$icmbCSVSpeed[$LB] = _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$LB])
 			$icmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$DB])
-
-			; ================================================== CUSTOM DROP ORDER ================================================== ;
-
-			$g_bCustomTrainDropOrderEnable = GUICtrlRead($g_hChkCustomTrainDropOrderEnable) = $GUI_CHECKED ? True : False
-			For $p = 0 To UBound($icmbDropTroops) - 1
-				$icmbDropTroops[$p] = _GUICtrlComboBox_GetCurSel($cmbDropTroops[$p])
-			Next
 
 			; ================================================== Super XP PART ================================================== ;
 
@@ -374,65 +275,10 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			cmbStandardReplay()
 			cmbWarReplay()
 
-			; ================================================== AUTO UPGRADE PART ================================================== ;
-
-			GUICtrlSetState($g_chkAutoUpgrade, $g_ichkAutoUpgrade = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			For $i = 0 To 12
-				GUICtrlSetState($g_chkUpgradesToIgnore[$i], $g_ichkUpgradesToIgnore[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			Next
-			For $i = 0 To 2
-				GUICtrlSetState($g_chkResourcesToIgnore[$i], $g_ichkResourcesToIgnore[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			Next
-			GUICtrlSetData($g_SmartMinGold, $g_iSmartMinGold)
-			GUICtrlSetData($g_SmartMinElixir, $g_iSmartMinElixir)
-			GUICtrlSetData($g_SmartMinDark, $g_iSmartMinDark)
-			chkAutoUpgrade()
-
-			; ================================================== BB FEATURES PART ================================================== ;
-
-			GUICtrlSetState($g_chkCollectBldGE, $g_ichkCollectBldGE = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_chkCollectBldGems, $g_ichkCollectBldGems = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_chkActivateClockTower, $g_ichkActivateClockTower = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-
-			GUICtrlSetState($g_chkBBSuggestedUpgrades, $g_ichkBBSuggestedUpgrades = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_chkBBSuggestedUpgradesIgnoreGold, $g_ichkBBSuggestedUpgradesIgnoreGold = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_chkBBSuggestedUpgradesIgnoreElixir, $g_ichkBBSuggestedUpgradesIgnoreElixir = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_chkBBSuggestedUpgradesIgnoreHall, $g_ichkBBSuggestedUpgradesIgnoreHall = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-
-			GUICtrlSetState($g_chkPlacingNewBuildings, $g_ichkPlacingNewBuildings = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-
-			chkActivateBBSuggestedUpgrades()
-			chkActivateBBSuggestedUpgradesGold()
-			chkActivateBBSuggestedUpgradesElixir()
-			chkPlacingNewBuildings()
-
-
 			; ================================================== CSV SPEED PART ================================================== ;
 
 			_GUICtrlComboBox_SetCurSel($cmbCSVSpeed[$LB], $icmbCSVSpeed[$LB])
 			_GUICtrlComboBox_SetCurSel($cmbCSVSpeed[$DB], $icmbCSVSpeed[$DB])
-
-			; ================================================== CUSTOM DROP ORDER ================================================== ;
-
-			GUICtrlSetState($g_hChkCustomTrainDropOrderEnable, $g_bCustomTrainDropOrderEnable = True ? $GUI_CHECKED : $GUI_UNCHECKED)
-			For $p = 0 To UBound($icmbDropTroops) - 1
-				_GUICtrlComboBox_SetCurSel($cmbDropTroops[$p], $icmbDropTroops[$p])
-				GUICtrlSetImage($g_ahImgTroopDropOrder[$p], $g_sLibIconPath, $g_aiTroopOrderDropIcon[$icmbDropTroops[$p] + 1])
-			Next
-			; process error
-			If $g_bCustomTrainDropOrderEnable = True Then ; only update troop train order if enabled
-				If ChangeTroopDropOrder() = False Then ; process error
-					;SetDefaultTroopGroup()
-					GUICtrlSetState($g_hChkCustomTrainDropOrderEnable, $GUI_UNCHECKED)
-					$g_bCustomTrainDropOrderEnable = False
-					GUICtrlSetState($g_hBtnTroopOrderSet2, $GUI_DISABLE) ; disable button
-					GUICtrlSetState($g_hBtnRemoveTroops2, $GUI_DISABLE)
-					For $i = 0 To UBound($cmbDropTroops) - 1
-						GUICtrlSetState($cmbDropTroops[$i], $GUI_DISABLE) ; disable combo boxes
-					Next
-				EndIf
-			EndIf
-			chkTroopDropOrder()
 
 			; ================================================== Super XP PART ================================================== ;
 

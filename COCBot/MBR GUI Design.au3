@@ -430,6 +430,7 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 	Static $g_hGUI_STRATEGIES_TAB_ImageList = 0
 	Static $g_hGUI_BOT_TAB_ImageList = 0
 	Static $g_hGUI_STATS_TAB_ImageList = 0
+	Static $g_hGUI_MOD_TAB_ImageList = 0 ; PICO MOD 
 
 	Bind_ImageList($g_hTabMain, $g_hTabMain_ImageList)
 
@@ -447,7 +448,7 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 	Bind_ImageList($g_hGUI_THSNIPE_TAB, $g_hGUI_THSNIPE_TAB_ImageList)
 	Bind_ImageList($g_hGUI_ATTACKOPTION_TAB, $g_hGUI_ATTACKOPTION_TAB_ImageList)
 	Bind_ImageList($g_hGUI_STRATEGIES_TAB, $g_hGUI_STRATEGIES_TAB_ImageList)
-	Bind_ImageList($g_hGUI_MOD_TAB) ; PICO MOD
+	Bind_ImageList($g_hGUI_MOD_TAB, $g_hGUI_MOD_TAB_ImageList) ; PICO MOD
 
 	Bind_ImageList($g_hGUI_BOT_TAB, $g_hGUI_BOT_TAB_ImageList)
 

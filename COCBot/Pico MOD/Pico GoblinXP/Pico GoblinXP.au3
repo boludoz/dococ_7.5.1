@@ -122,7 +122,7 @@ EndFunc   ;==>chkEnableSuperXP2
 
 Func MainSuperXPHandler()
 	If $ichkEnableSuperXP = 0 Then Return
-	If $g_idebugSetlog Or $DebugSX Then SetLog("Begin MainSuperXPHandler, $irbSXTraining=" & $irbSXTraining & ", $IsFullArmywithHeroesAndSpells=" & $g_bIsFullArmywithHeroesAndSpells, $COLOR_DEBUG)
+	; PICO MOD - DEBUG If $g_idebugSetlog Or $DebugSX Then SetLog("Begin MainSuperXPHandler, $irbSXTraining=" & $irbSXTraining & ", $IsFullArmywithHeroesAndSpells=" & $g_bIsFullArmywithHeroesAndSpells, $COLOR_DEBUG)
 	If $irbSXTraining = 1 And $g_bIsFullArmywithHeroesAndSpells = True Then Return ; If Gain while Training Enabled but Army is Full Then Return
 	If $iGainedXP >= $itxtMaxXPtoGain Then
 		SetLog("You have Max XP to Gain GoblinXP", $COLOR_DEBUG)
@@ -138,7 +138,7 @@ Func MainSuperXPHandler()
 	EndIf
 
 	$g_aiCurrentLoot[$eLootTrophy] = getTrophyMainScreen($aTrophies[0], $aTrophies[1]) ; get OCR to read current Village Trophies
-	If $g_iDebugSetlog = 1 Then SetLog("Current Trophy Count: " & $g_aiCurrentLoot, $COLOR_DEBUG) ;Debug
+	; If $g_iDebugSetlog = 1 Then SetLog("Current Trophy Count: " & $g_aiCurrentLoot, $COLOR_DEBUG) ;Debug
 	If Number($g_aiCurrentLoot) > Number($g_iDropTrophyMax) Then Return
 
 	Local $aHeroResult = getArmyHeroCount(True, True)

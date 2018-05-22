@@ -15,7 +15,6 @@
 
 #include "Pico Switch Account.au3"
 #include "Pico Treasury Collect.au3"
-#include "Pico Auto Upgrade.au3"
 #include "Pico CSV Speed.au3"
 #include "Pico QuickMIS.au3"
 #include "Pico Four Finger Classic.au3"
@@ -25,20 +24,11 @@
 #include "Pico GoblinXP\Pico multiSearch.au3"
 #include "Pico GoblinXP\Pico ArrayFunctions.au3"
 
-#include "Pico Troops Dropping Order\Pico Drop Order GUI.au3"
-#include "Pico Troops Dropping Order\Pico Drop Order.au3"
-
 #include "Pico Bot Humanization\BotHumanization.au3"
 #include "Pico Bot Humanization\AttackNDefenseActions.au3"
 #include "Pico Bot Humanization\BestClansNPlayersActions.au3"
 #include "Pico Bot Humanization\ChatActions.au3"
 #include "Pico Bot Humanization\ClanActions.au3"
 #include "Pico Bot Humanization\ClanWarActions.au3"
-
-#include "Pico Builders Base\ActivateClockTower.au3"
-#include "Pico Builders Base\BuilderBaseReport.au3"
-#include "Pico Builders Base\CollectBuildersResources.au3"
-#include "Pico Builders Base\SuggestedUpgrades.au3"
-#include "Pico Builders Base\GoToBBFeatures.au3"
 
 #include "Pico Config.au3"

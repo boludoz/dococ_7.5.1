@@ -182,6 +182,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 				debugAttackCSV(">> delay change drop point: " & $delayDrop)
 			EndIf
+		 EndIf
 
 			For $j = 1 To $numbersOfVectors
 				;delay time between 2 drops in different point

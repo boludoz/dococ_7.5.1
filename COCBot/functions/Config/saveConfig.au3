@@ -244,6 +244,10 @@ Func SaveRegularConfig()
 
 	; <><><><> Bot / Stats <><><><>
 	; <<< nothing here >>>
+	
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+    SaveConfig_PicoMod()
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 
 	;SetDebugLog("saveConfig: Wrote " & $g_iIniLineCount & " ini lines.")
 	_Ini_Save($g_sProfileConfigPath)
@@ -335,10 +339,10 @@ Func SaveConfig_600_6()
 	_Ini_Add("other", "chkCleanYard", $g_bChkCleanYard ? 1 : 0)
 	_Ini_Add("other", "ChkCollectFreeMagicItems", $g_bChkCollectFreeMagicItems ? 1 : 0)
 	_Ini_Add("other", "chkGemsBox", $g_bChkGemsBox ? 1 : 0)
-	_Ini_Add("other", "ChkTreasuryCollect", $g_bChkTreasuryCollect ? 1 : 0)
-	_Ini_Add("other", "minTreasurygold", $g_iTxtTreasuryGold)
-	_Ini_Add("other", "minTreasuryelixir", $g_iTxtTreasuryElixir)
-	_Ini_Add("other", "minTreasurydark", $g_iTxtTreasuryDark)
+; PICO MOD -    _Ini_Add("other", "ChkTreasuryCollect", $g_bChkTreasuryCollect ? 1 : 0)
+; PICO MOD -    _Ini_Add("other", "minTreasurygold", $g_iTxtTreasuryGold)
+; PICO MOD -    _Ini_Add("other", "minTreasuryelixir", $g_iTxtTreasuryElixir)
+; PICO MOD -    _Ini_Add("other", "minTreasurydark", $g_iTxtTreasuryDark)
 
 	_Ini_Add("other", "ChkCollectBuildersBase", $g_bChkCollectBuilderBase ? 1 : 0)
 	_Ini_Add("other", "ChkStartClockTowerBoost", $g_bChkStartClockTowerBoost ? 1 : 0)
