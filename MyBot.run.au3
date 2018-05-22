@@ -64,6 +64,8 @@ Opt("TrayOnEventMode", 1)
 InitializeBot()
 
 ; Hand over control to main loop
+NotifyGetLastMessageFromTelegramBtnStart()  ; PICO MOD
+$g_iTGLastRemote = $g_sTGLast_UID           ; PICO MOD
 MainLoop(CheckPrerequisites())
 
 Func UpdateBotTitle()
@@ -622,6 +624,11 @@ Func MainLoop($bCheckPrerequisitesOK = True)
 
 	While 1
 		_Sleep($DELAYSLEEP, True, False)
+		
+        If $g_bRunState = False And ($g_bNotifyPBEnable = True Or $g_bNotifyTGEnable = True) And $g_bNotifyRemoteEnable = True Then  ; PICO MOD
+            NotifyRemoteControlProcBtnStart()                                                                                        ; PICO MOD
+        EndIf                                                                                                                        ; PICO MOD
+
 
 		If Not $g_bRunState And ($g_bNotifyPBEnable Or $g_bNotifyTGEnable) And $g_bNotifyRemoteEnable Then
 			NotifyRemoteControlProcBtnStart()
@@ -654,6 +661,16 @@ EndFunc   ;==>MainLoop
 
 Func runBot() ;Bot that runs everything in order
 	Local $iWaitTime
+	
+    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+    ; if Emulator is MEmu, is necessary to make the emulator ready to be used with Unicode send text
+    If $g_sAndroidEmulator = "MEmu" and $g_iChkRequestUnicode = 1 Then
+        Setlog("Setting the Emulator for Unicode, please wait!",$COLOR_INFO)
+        prepareAndroidForUnicodeText()
+    EndIf
+    If $g_bFirstInit Then SwitchAccount(True)
+    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
 
 	InitiateSwitchAcc()
 	If ProfileSwitchAccountEnabled() And $g_bReMatchAcc Then
@@ -712,7 +729,18 @@ Func runBot() ;Bot that runs everything in order
 			If _Sleep($DELAYRUNBOT5) Then Return
 			checkMainScreen(False)
 			If $g_bRestart = True Then ContinueLoop
-			Local $aRndFuncList = ['Collect', 'CheckTombs', 'ReArm', 'CleanYard']
+
+            ; ProMac
+            ; First is nececssary Check Army camp all values  , will give all INFO and Request CC if needed
+            ProfileReport()
+            If _Sleep($DELAYRUNBOT5) Then Return
+            checkMainScreen(False)
+            checkArmyCamp(True, True, False, True)
+
+            ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+            ;Local $aRndFuncList = ['Collect', 'CheckTombs', 'ReArm', 'CleanYard']
+            Local $aRndFuncList = ['Collect', 'CheckTombs', 'ReArm', 'CleanYard', 'CollectTreasury', 'LabCheck']
+            ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 			While 1
 				If $g_bRunState = False Then Return
 				If $g_bRestart = True Then ContinueLoop 2 ; must be level 2 due to loop-in-loop
@@ -731,7 +759,7 @@ Func runBot() ;Bot that runs everything in order
 			If $g_bRunState = False Then Return
 			If $g_bRestart = True Then ContinueLoop
 			If IsSearchAttackEnabled() Then ; if attack is disabled skip reporting, requesting, donating, training, and boosting
-				Local $aRndFuncList = ['ReplayShare', 'NotifyReport', 'DonateCC,Train', 'BoostBarracks', 'BoostSpellFactory', 'BoostKing', 'BoostQueen', 'BoostWarden', 'RequestCC', 'CollectFreeMagicItems']
+				Local $aRndFuncList = ['ReplayShare', 'NotifyReport', 'DonateCC,Train', 'Boost', 'RequestCC', 'CollectFreeMagicItems']
 				While 1
 					If $g_bRunState = False Then Return
 					If $g_bRestart = True Then ContinueLoop 2 ; must be level 2 due to loop-in-loop
@@ -752,9 +780,30 @@ Func runBot() ;Bot that runs everything in order
 					If Unbreakable() = True Then ContinueLoop
 				EndIf
 			EndIf
-			If ($g_iCommandStop = 3 Or $g_iCommandStop = 0) Then ; Train Donate only - force a donate cc everytime, Ignore any SkipDonate Near Full Values
-				If BalanceDonRec(True) Then DonateCC()
-			EndIf
+
+	
+	
+	
+	
+	
+	
+	
+
+            ;===========Ezeck 6-14-2017=================
+            ;when 'train/donate only' is the condition.. and camps fill. and func idle is never called (it happens)... donates never happen because of IsSearchAttackEnabled
+            ; Adding a Call to donateCC() when train donate only is the condition
+
+            If ($g_iCommandStop = 3 Or $g_iCommandStop = 0) Then ; Train Donate only - force a donate cc everytime, Ignore any SkipDonate Near Full Values
+                If BalanceDonRec(True) Then DonateCC()
+            EndIf
+            ;============================================
+
+            ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+            AutoUpgrade()
+            ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
+            MainSuperXPHandler()
+
 			Local $aRndFuncList = ['Laboratory', 'UpgradeHeroes', 'UpgradeBuilding', 'BuilderBase']
 			While 1
 				If $g_bRunState = False Then Return
@@ -842,7 +891,10 @@ Func _Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
 	If $g_bDebugSetlog Then SetDebugLog("Func Idle ", $COLOR_DEBUG)
 
-	While $g_bIsFullArmywithHeroesAndSpells = False
+    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+    ;While $g_bIsFullArmywithHeroesAndSpells = False
+    While ($g_bIsFullArmywithHeroesAndSpells = False) Or (CheckDelayStayOnAccount() = True) ; SWITCH?
+        ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 
 		CheckAndroidReboot()
 
@@ -853,10 +905,21 @@ Func _Idle() ;Sequence that runs until Full Army
 		Local $hTimer = __TimerInit()
 		Local $iReHere = 0
 
+		; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+		BotHumanization()
+		; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
+		;If $g_bDonateSkipNearFullEnable = True Then getArmyCapacity(true,true)
 		If $g_iActiveDonate And $g_bChkDonate Then
 			Local $aHeroResult = CheckArmyCamp(True, True, True, False)
 			While $iReHere < 7
 				$iReHere += 1
+
+				If ($g_iCommandStop = 3 Or $g_iCommandStop = 0) Then ; Train Donate only - force a donate cc everytime, Ignore any SkipDonate Near Full Values
+					DonateCC()
+					ExitLoop
+				EndIf
+
 				If $iReHere = 1 And SkipDonateNearFullTroops(True, $aHeroResult) = False And BalanceDonRec(True) Then
 					DonateCC(True)
 				ElseIf SkipDonateNearFullTroops(False, $aHeroResult) = False And BalanceDonRec(False) Then
@@ -924,6 +987,7 @@ Func _Idle() ;Sequence that runs until Full Army
 		If $g_iCommandStop = 0 And $g_bTrainEnabled = True Then
 			If Not ($g_bFullArmy) Then
 				If $g_iActualTrainSkip < $g_iMaxTrainSkip Then
+					MainSuperXPHandler()
 					If CheckNeedOpenTrain($g_sTimeBeforeTrain) Then TrainRevamp()
 					If $g_bRestart = True Then ExitLoop
 					If _Sleep($DELAYIDLE1) Then ExitLoop
@@ -935,6 +999,7 @@ Func _Idle() ;Sequence that runs until Full Army
 					EndIf
 					CheckArmyCamp(True, True)
 				EndIf
+				MainSuperXPHandler()
 			EndIf
 			If $g_bFullArmy And $g_bTrainEnabled = True Then
 				SetLog("Army Camp and Barracks are full, stop Training...", $COLOR_ACTION)
@@ -957,6 +1022,14 @@ Func _Idle() ;Sequence that runs until Full Army
 
 		SetLog("Time Idle: " & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))))
 
+		; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+		If $g_iachkDonateAccount[$g_iCurrentAccount] = 1 Then                                                                         ; SWITCH
+			TrainDonateOnlyLoop()                                                                                                     ; SWITCH
+		Else                                                                                                                          ; SWITCH
+			SwitchAccount()                                                                                                           ; SWITCH
+		EndIf                                                                                                                         ; SWITCH
+		; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
 		If $g_bOutOfGold = True Or $g_bOutOfElixir = True Then Return ; Halt mode due low resources, only 1 idle loop
 
 		If ProfileSwitchAccountEnabled() Then checkSwitchAcc() ; Forced to switch when in halt attack mode
@@ -971,10 +1044,14 @@ Func _Idle() ;Sequence that runs until Full Army
 	WEnd
 EndFunc   ;==>_Idle
 
-Func AttackMain() ;Main control for attack functions
-	If ProfileSwitchAccountEnabled() And $g_abDonateOnly[$g_iCurAccount] Then Return
-	getArmyTroopCapacity(True, True)
-	ClickP($aAway, 1, 0, "#0000") ;Click Away to prevent any pages on top
+Func AttackMain() ;Main control for attack functions                                  ; PICO MOD - SWITCH
+	If ProfileSwitchAccountEnabled() And $g_abDonateOnly[$g_iCurAccount] Then Return  ; PICO MOD - SWITCH
+    ;LoadAmountOfResourcesImages() ; for debug                                        ; PICO MOD - SWITCH
+    If $ichkEnableSuperXP = 1 And $irbSXTraining = 2 Then                             ; PICO MOD - SWITCH
+        MainSuperXPHandler()                                                          ; PICO MOD - SWITCH
+        Return                                                                        ; PICO MOD - SWITCH
+    EndIf					                                                          ; PICO MOD - SWITCH
+		                                                                              ; PICO MOD - SWITCH
 	If IsSearchAttackEnabled() Then
 		If (IsSearchModeActive($DB) And checkCollectors(True, False)) Or IsSearchModeActive($LB) Or IsSearchModeActive($TS) Then
 			If ProfileSwitchAccountEnabled() And ($g_aiAttackedCountSwitch[$g_iCurAccount] <= $g_aiAttackedCountAcc[$g_iCurAccount] - 2) Then checkSwitchAcc()
@@ -1046,7 +1123,7 @@ Func QuickAttack()
 	Local $quicklymilking = 0
 	Local $quicklythsnipe = 0
 
-	getArmyTroopCapacity(True, True)
+	; PICO MOD getArmyTroopCapacity(True, True)
 
 	If ($g_aiAttackAlgorithm[$DB] = 2 And IsSearchModeActive($DB)) Or (IsSearchModeActive($TS)) Then
 		VillageReport()
@@ -1086,6 +1163,13 @@ Func _RunFunction($action)
 		Case "Collect"
 			Collect()
 			_Sleep($DELAYRUNBOT1)
+
+			; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+		Case "CollectTreasury"
+			CollectTreasury()
+			_Sleep($DELAYRUNBOT1)
+			; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
 		Case "CheckTombs"
 			CheckTombs()
 			_Sleep($DELAYRUNBOT3)
@@ -1132,19 +1216,16 @@ Func _RunFunction($action)
 			Else
 				If $g_bDebugSetlogTrain Then SetLog("Halt mode - training disabled", $COLOR_DEBUG)
 			EndIf
-		Case "BoostBarracks"
+		Case "Boost"
 			BoostBarracks()
-		Case "BoostSpellFactory"
 			BoostSpellFactory()
-		Case "BoostKing"
 			BoostKing()
-		Case "BoostQueen"
 			BoostQueen()
-		Case "BoostWarden"
 			BoostWarden()
 		Case "RequestCC"
 			RequestCC()
 			If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
+
 		Case "Laboratory"
 			Laboratory()
 			If _Sleep($DELAYRUNBOT3) = False Then checkMainScreen(False)
@@ -1156,6 +1237,12 @@ Func _RunFunction($action)
 			_Sleep($DELAYRUNBOT3)
  			AutoUpgrade()
 			_Sleep($DELAYRUNBOT3)
+        Case "LabCheck"
+            Setlog("Checking Lab Status", $COLOR_INFO)
+            LabGuiDisplay()
+        Case "SuperXP"
+            MainSuperXPHandler()
+            _Sleep($DELAYRUNBOT3)
 		Case "BuilderBase"
 			If isOnBuilderBase() Or (($g_bChkCollectBuilderBase Or $g_bChkStartClockTowerBoost Or $g_iChkBBSuggestedUpgrades) And SwitchBetweenBases()) Then
 				CollectBuilderBase()
