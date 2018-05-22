@@ -529,27 +529,27 @@ Func chkTrophyHeroes()
 	EndIf
 EndFunc   ;==>chkTrophyHeroes
 
-Func ChkCollect()
-	If GUICtrlRead($g_hChkCollect) = $GUI_CHECKED Then
-		GUICtrlSetState($g_hChkTreasuryCollect, $GUI_ENABLE)
-	Else
-		GUICtrlSetState($g_hChkTreasuryCollect, $GUI_UNCHECKED)
-		GUICtrlSetState($g_hChkTreasuryCollect, $GUI_DISABLE)
-	EndIf
-	ChkTreasuryCollect()
-EndFunc   ;==>ChkCollect
-
-Func ChkTreasuryCollect()
-	If GUICtrlRead($g_hChkTreasuryCollect) = $GUI_CHECKED Then
-		GUICtrlSetState($g_hTxtTreasuryGold, $GUI_ENABLE)
-		GUICtrlSetState($g_hTxtTreasuryElixir, $GUI_ENABLE)
-		GUICtrlSetState($g_hTxtTreasuryDark, $GUI_ENABLE)
-	Else
-		GUICtrlSetState($g_hTxtTreasuryGold, $GUI_DISABLE)
-		GUICtrlSetState($g_hTxtTreasuryElixir, $GUI_DISABLE)
-		GUICtrlSetState($g_hTxtTreasuryDark, $GUI_DISABLE)
-	EndIf
-EndFunc   ;==>ChkTreasuryCollect
+ ; PICO MOD - TREASURY Func ChkCollect()
+ ; PICO MOD - TREASURY 	If GUICtrlRead($g_hChkCollect) = $GUI_CHECKED Then
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hChkTreasuryCollect, $GUI_ENABLE)
+ ; PICO MOD - TREASURY 	Else
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hChkTreasuryCollect, $GUI_UNCHECKED)
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hChkTreasuryCollect, $GUI_DISABLE)
+ ; PICO MOD - TREASURY 	EndIf
+ ; PICO MOD - TREASURY 	ChkTreasuryCollect()
+ ; PICO MOD - TREASURY EndFunc   ;==>ChkCollect
+ ; PICO MOD - TREASURY 
+ ; PICO MOD - TREASURY Func ChkTreasuryCollect()
+ ; PICO MOD - TREASURY 	If GUICtrlRead($g_hChkTreasuryCollect) = $GUI_CHECKED Then
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hTxtTreasuryGold, $GUI_ENABLE)
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hTxtTreasuryElixir, $GUI_ENABLE)
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hTxtTreasuryDark, $GUI_ENABLE)
+ ; PICO MOD - TREASURY 	Else
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hTxtTreasuryGold, $GUI_DISABLE)
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hTxtTreasuryElixir, $GUI_DISABLE)
+ ; PICO MOD - TREASURY 		GUICtrlSetState($g_hTxtTreasuryDark, $GUI_DISABLE)
+ ; PICO MOD - TREASURY 	EndIf
+ ; PICO MOD - TREASURY EndFunc   ;==>ChkTreasuryCollect
 
 Func chkStartClockTowerBoost()
 	If GUICtrlRead($g_hChkStartClockTowerBoost) = $GUI_CHECKED Then

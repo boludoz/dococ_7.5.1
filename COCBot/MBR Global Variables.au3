@@ -774,10 +774,10 @@ Global $g_iTxtRestartGold = 10000
 Global $g_iTxtRestartElixir = 25000
 Global $g_iTxtRestartDark = 500
 Global $g_bChkTrap = True, $g_bChkCollect = True, $g_bChkTombstones = True, $g_bChkCleanYard = False, $g_bChkGemsBox = False
-Global $g_bChkTreasuryCollect = False
-Global $g_iTxtTreasuryGold = 0
-Global $g_iTxtTreasuryElixir = 0
-Global $g_iTxtTreasuryDark = 0
+;Global $g_bChkTreasuryCollect = False
+;Global $g_iTxtTreasuryGold = 0
+;Global $g_iTxtTreasuryElixir = 0
+;Global $g_iTxtTreasuryDark = 0
 
 Global $g_bChkCollectBuilderBase = False, $g_bChkStartClockTowerBoost = False, $g_bChkCTBoostBlderBz = False
 
@@ -1654,3 +1654,5 @@ Global $g_iPurgeJobCount[8] = [0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_iPurgeMax = 5 ; [0] is unlimited , 1-10
 
 Global $g_bChkCollectFreeMagicItems = True
+
+#include "Pico MOD\Pico MOD Global Variables.au3" ; PICO MOD

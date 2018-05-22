@@ -138,6 +138,11 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 
 	; <><><><> Attack Plan / Strategies <><><><>
 	; <<< nothing here >>>
+	
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+    ApplyConfig_PicoMod($TypeReadSave) ; SWITCH
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
 
 	; <><><><> Bot / Profiles <><><><>
 	PopulatePresetComboBox()
@@ -286,16 +291,16 @@ Func ApplyConfig_600_6($TypeReadSave)
 			GUICtrlSetData($g_hTxtRestartDark, $g_iTxtRestartDark)
 			GUICtrlSetState($g_hChkTrap, $g_bChkTrap ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkCollect, $g_bChkCollect ? $GUI_CHECKED : $GUI_UNCHECKED)
-			ChkCollect()
+			;ChkCollect() ; PICO MOD
 			GUICtrlSetState($g_hChkTombstones, $g_bChkTombstones ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkCleanYard, $g_bChkCleanYard ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkGemsBox, $g_bChkGemsBox ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hChkTreasuryCollect, $g_bChkTreasuryCollect ? $GUI_CHECKED : $GUI_UNCHECKED)
+			; PICO MOD GUICtrlSetState($g_hChkTreasuryCollect, $g_bChkTreasuryCollect ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkFreeMagicItems, $g_bChkCollectFreeMagicItems ? $GUI_CHECKED : $GUI_UNCHECKED)
-			ChkTreasuryCollect()
-			GUICtrlSetData($g_hTxtTreasuryGold, $g_iTxtTreasuryGold)
-			GUICtrlSetData($g_hTxtTreasuryElixir, $g_iTxtTreasuryElixir)
-			GUICtrlSetData($g_hTxtTreasuryDark, $g_iTxtTreasuryDark)
+			; PICO MOD ChkTreasuryCollect()
+			; PICO MOD GUICtrlSetData($g_hTxtTreasuryGold, $g_iTxtTreasuryGold)
+			; PICO MOD GUICtrlSetData($g_hTxtTreasuryElixir, $g_iTxtTreasuryElixir)
+			; PICO MOD GUICtrlSetData($g_hTxtTreasuryDark, $g_iTxtTreasuryDark)
 
 			GUICtrlSetState($g_hChkCollectBuilderBase, $g_bChkCollectBuilderBase ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkStartClockTowerBoost, $g_bChkStartClockTowerBoost ? $GUI_CHECKED : $GUI_UNCHECKED)
@@ -345,10 +350,10 @@ Func ApplyConfig_600_6($TypeReadSave)
 			$g_bChkCleanYard = (GUICtrlRead($g_hChkCleanYard) = $GUI_CHECKED)
 			$g_bChkCollectFreeMagicItems = (GUICtrlRead($g_hChkFreeMagicItems) = $GUI_CHECKED)
 			$g_bChkGemsBox = (GUICtrlRead($g_hChkGemsBox) = $GUI_CHECKED)
-			$g_bChkTreasuryCollect = (GUICtrlRead($g_hChkTreasuryCollect) = $GUI_CHECKED)
-			$g_iTxtTreasuryGold = GUICtrlRead($g_hTxtTreasuryGold)
-			$g_iTxtTreasuryElixir = GUICtrlRead($g_hTxtTreasuryElixir)
-			$g_iTxtTreasuryDark = GUICtrlRead($g_hTxtTreasuryDark)
+			; PICO MOD $g_bChkTreasuryCollect = (GUICtrlRead($g_hChkTreasuryCollect) = $GUI_CHECKED)
+			; PICO MOD $g_iTxtTreasuryGold = GUICtrlRead($g_hTxtTreasuryGold)
+			; PICO MOD $g_iTxtTreasuryElixir = GUICtrlRead($g_hTxtTreasuryElixir)
+			; PICO MOD $g_iTxtTreasuryDark = GUICtrlRead($g_hTxtTreasuryDark)
 
 			$g_bChkCollectBuilderBase = (GUICtrlRead($g_hChkCollectBuilderBase) = $GUI_CHECKED)
 			$g_bChkStartClockTowerBoost = (GUICtrlRead($g_hChkStartClockTowerBoost) = $GUI_CHECKED)
@@ -1383,7 +1388,7 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			Local $scriptname
 			_GUICtrlComboBox_GetLBText($g_hCmbScriptNameDB, $indexofscript, $scriptname)
 			$g_sAttackScrScriptName[$DB] = $scriptname
-			IniWriteS($g_sProfileConfigPath, "attack", "ScriptDB", $g_sAttackScrScriptName[$DB])
+            IniWriteS($g_sProfileConfigPath, "attack", "ScriptDB", $g_sAttackScrScriptName[$DB]) ; PICO MOD - FIX
 	EndSwitch
 EndFunc   ;==>ApplyConfig_600_29_DB_Scripted
 

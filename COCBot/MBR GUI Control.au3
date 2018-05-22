@@ -706,6 +706,7 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 			tabDONATE()
 		Case $g_hGUI_ATTACK_TAB
 			tabAttack()
+        Case $g_hGUI_MOD_TAB ; PICO MOD
 		Case $g_hGUI_SEARCH_TAB
 			tabSEARCH()
 		Case $g_hGUI_DEADBASE_TAB
@@ -1640,6 +1641,9 @@ Func tabMain()
 			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 			GUISetState(@SW_HIDE, $g_hGUI_BOT)
 			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+			GUISetState(@SW_HIDE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG)
 
 		Case $tabidx = 1 ; Village
@@ -1647,6 +1651,9 @@ Func tabMain()
 			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 			GUISetState(@SW_HIDE, $g_hGUI_BOT)
 			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_HIDE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_VILLAGE)
 			tabVillage()
 
@@ -1655,22 +1662,49 @@ Func tabMain()
 			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 			GUISetState(@SW_HIDE, $g_hGUI_BOT)
 			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
-			tabAttack()
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_HIDE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
+                tabAttack()
 
-		Case $tabidx = 3 ; Options
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_BOT)
-			tabBot()
+            Case $tabidx = 3 ; Options
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+            Case $tabidx = 3 ; MOD
+                GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+                GUISetState(@SW_HIDE, $g_hGUI_LOG)
+                GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+                GUISetState(@SW_HIDE, $g_hGUI_BOT)
+                GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+                GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;                ;tabMOD()
 
-		Case $tabidx = 4 ; About
-			GUISetState(@SW_HIDE, $g_hGUI_LOG)
-			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $g_hGUI_BOT)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+            ;Case $tabidx = 3 ; Options
+            Case $tabidx = 4 ; Options
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_HIDE, $g_hGUI_LOG)
+                GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+                GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+                GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_HIDE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_BOT)
+                tabBot()
+
+            Case $tabidx = 4 ; About
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+            ;Case $tabidx = 4 ; About
+            Case $tabidx = 5 ; About
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_HIDE, $g_hGUI_LOG)
+                GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+                GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+                GUISetState(@SW_HIDE, $g_hGUI_BOT)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+                GUISetState(@SW_HIDE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ABOUT)
 
 		Case Else
@@ -1678,6 +1712,9 @@ Func tabMain()
 			GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 			GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 			GUISetState(@SW_HIDE, $g_hGUI_BOT)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+            GUISetState(@SW_HIDE, $g_hGUI_MOD)
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 	EndSelect
 
 EndFunc   ;==>tabMain
@@ -1876,6 +1913,14 @@ Func tabDONATE()
 
 EndFunc   ;==>tabDONATE
 
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+Func tabMOD()
+    Local $tabidx = GUICtrlRead($g_hGUI_MOD_TAB)
+    CreateMODTab()
+EndFunc
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
+
 Func tabBot()
 	Local $tabidx = GUICtrlRead($g_hGUI_BOT_TAB)
 	Select
@@ -1891,11 +1936,12 @@ Func tabBot()
 			GUISetState(@SW_HIDE, $g_hGUI_STATS)
 			GUISetState(@SW_HIDE, $g_hGUI_LOG_SA)
 			ControlHide("", "", $g_hCmbGUILanguage)
-		Case $tabidx = 3 ; Profiles tab
-			GUISetState(@SW_HIDE, $g_hGUI_STATS)
-			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG_SA)
-			ControlHide("", "", $g_hCmbGUILanguage)
-		Case $tabidx = 4 ; Stats tab
+		;Case $tabidx = 3 ; Profiles tab                      ; PICO MOD
+		;	GUISetState(@SW_HIDE, $g_hGUI_STATS)              ; PICO MOD
+		;	GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG_SA)   ; PICO MOD
+		;	ControlHide("", "", $g_hCmbGUILanguage)           ; PICO MOD
+		;Case $tabidx = 4 ; Stats tab                         ; PICO MOD
+		Case $tabidx = 3 ; Stats tab
 			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_STATS)
 			GUISetState(@SW_HIDE, $g_hGUI_LOG_SA)
 			If Not $g_bRunState Then UpdateMultiStats()
@@ -1972,7 +2018,14 @@ Func Bind_ImageList($nCtrl, ByRef $hImageList)
 	Switch $nCtrl
 		Case $g_hTabMain
 			; the icons for main tab
-			Local $aIconIndex = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnInfo]
+            Local $aIconIndex = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnPMOD, $eIcnGUI, $eIcnInfo] ; PICO MOD
+			
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+        Case $g_hGUI_MOD_TAB
+            ; the icons for MOD tab
+            Local $aIconIndex = [$eIcnProfileSwitch, $eIcnCoin, $eIcnBrain, $eIcnUpgrade, $eIcnBldHead, $eIcnGoblinXP]
+; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
 
 		Case $g_hGUI_VILLAGE_TAB
 			; the icons for village tab

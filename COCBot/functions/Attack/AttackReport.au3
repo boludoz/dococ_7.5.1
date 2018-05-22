@@ -191,6 +191,10 @@ Func AttackReport()
 	Else
 		SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_ERROR)
 	EndIf
+    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+    AddLineToPicoSwitchAccountLog($AtkLogTxt) ; SWITCH
+    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
+
 
 	; rename or delete zombie
 	If $g_bDebugDeadBaseImage Then
