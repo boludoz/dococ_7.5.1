@@ -534,9 +534,9 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean, $eAzerbaijani, _
 		$eArabic, $eIcnBuilderHall, $eIcnClockTower, $eIcnElixirCollectorL5, $eIcnGemMine, $eIcnGoldMineL5, _
 		$eIcnProfileSwitch, $eIcnChat, $eIcnTarget, $eIcnSettings, $eIcnRepeat, $eIcnClan, $eIcnBrain, $eIcnPMOD, $eIcnUpgrade, $eIcnCoin, _
-        $eIcnBldGold, $eIcnBldElixir, $eIcnBldHead, $eIcnBldAtk, $eIcnBldBoat, $eIcnBldTrophy, $eIcnBldClockBtn, $eIcnBldBoatBtn, _ ; ADDITION BY ROROTITI - PICO MOD
-        $eIcnGrayShield, $eIcnBlueShield, $eIcnGreenShield, $eIcnRedShield , $eIcnMBisland, _; ADDITION BY EZECK - PICO MOD
-        $eIcnGoblinXP ; ADDITION BY ROROTITI - PICO MOD
+		$eIcnBldGold, $eIcnBldElixir, $eIcnBldHead, $eIcnBldAtk, $eIcnBldBoat, $eIcnBldTrophy, $eIcnBldClockBtn, $eIcnBldBoatBtn, _ ; ADDITION BY ROROTITI - PICO MOD
+		$eIcnGrayShield, $eIcnBlueShield, $eIcnGreenShield, $eIcnRedShield , $eIcnMBisland, _; ADDITION BY EZECK - PICO MOD
+		$eIcnGoblinXP ; ADDITION BY ROROTITI - PICO MOD
 
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
