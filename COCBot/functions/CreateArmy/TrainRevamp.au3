@@ -2033,18 +2033,18 @@ Func IIf($Condition, $IfTrue, $IfFalse)
 		Return $IfFalse
 	EndIf
 EndFunc   ;==>IIf
-
-Func _ArryRemoveBlanks(ByRef $aArray)
-	Local $iCounter = 0
-	For $i = 0 To UBound($aArray) - 1
-		If $aArray[$i] <> "" Then
-			$aArray[$iCounter] = $aArray[$i]
-			$iCounter += 1
-		EndIf
-	Next
-	ReDim $aArray[$iCounter]
-EndFunc   ;==>_ArryRemoveBlanks
-
+#cs                                           ; PICO MOD - SUPERXP
+Func _ArryRemoveBlanks(ByRef $aArray)         ; PICO MOD - SUPERXP
+	Local $iCounter = 0                       ; PICO MOD - SUPERXP
+	For $i = 0 To UBound($aArray) - 1         ; PICO MOD - SUPERXP
+		If $aArray[$i] <> "" Then             ; PICO MOD - SUPERXP
+			$aArray[$iCounter] = $aArray[$i]  ; PICO MOD - SUPERXP
+			$iCounter += 1                    ; PICO MOD - SUPERXP
+		EndIf                                 ; PICO MOD - SUPERXP
+	Next                                      ; PICO MOD - SUPERXP
+	ReDim $aArray[$iCounter]                  ; PICO MOD - SUPERXP
+EndFunc   ;==>_ArryRemoveBlanks               ; PICO MOD - SUPERXP
+#ce                                           ; PICO MOD - SUPERXP
 Func ValidateSearchArmyResult($aSearchResult, $iIndex = 0)
 	If IsArray($aSearchResult) Then
 		If UBound($aSearchResult) > 0 Then

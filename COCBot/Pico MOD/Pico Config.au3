@@ -72,16 +72,19 @@ Func ReadConfig_PicoMod()
 
 	; ================================================== Super XP PART ================================================== ;
 
-	IniReadS($ichkEnableSuperXP, $g_sProfileConfigPath, "Pico GoblinXP", "EnableSuperXP", 0, "int")
-	IniReadS($irbSXTraining, $g_sProfileConfigPath, "Pico GoblinXP", "SXTraining", 1, "int")
-	IniReadS($itxtMaxXPtoGain, $g_sProfileConfigPath, "Pico GoblinXP", "MaxXptoGain", 500, "int")
-	IniReadS($ichkSXBK, $g_sProfileConfigPath, "Pico GoblinXP", "SXBK", $eHeroNone)
-	IniReadS($ichkSXAQ, $g_sProfileConfigPath, "Pico GoblinXP", "SXAQ", $eHeroNone)
-	IniReadS($ichkSXGW, $g_sProfileConfigPath, "Pico GoblinXP", "SXGW", $eHeroNone)
+	IniReadS($ichkEnableSuperXP, $g_sProfileConfigPath, "GoblinXP", "EnableSuperXP", 0, "int")
+	IniReadS($ichkSkipZoomOutXP, $g_sProfileConfigPath, "GoblinXP", "SkipZoomOutXP", 0, "int")
+	IniReadS($ichkFastGoblinXP, $g_sProfileConfigPath, "GoblinXP", "FastGoblinXP", 0, "int")
+	IniReadS($irbSXTraining, $g_sProfileConfigPath, "GoblinXP", "SXTraining", 1, "int")
+	IniReadS($itxtMaxXPtoGain, $g_sProfileConfigPath, "GoblinXP", "MaxXptoGain", 500, "int")
+	IniReadS($ichkSXBK, $g_sProfileConfigPath, "GoblinXP", "SXBK", $eHeroNone)
+	IniReadS($ichkSXAQ, $g_sProfileConfigPath, "GoblinXP", "SXAQ", $eHeroNone)
+	IniReadS($ichkSXGW, $g_sProfileConfigPath, "GoblinXP", "SXGW", $eHeroNone)
 
 EndFunc   ;==>ReadConfig_PicoMod
 
 Func SaveConfig_PicoMod()
+	ApplyConfig_PicoMod(GetApplyConfigSaveAction())
 
 	_Ini_Add("Pico Unicode", "ChkRequestUnicode", $g_iChkRequestUnicode ? 1 : 0)
 
@@ -139,14 +142,16 @@ Func SaveConfig_PicoMod()
 
 	; ================================================== Super XP PART ================================================== ;
 
-	_Ini_Add("Pico GoblinXP", "EnableSuperXP", $ichkEnableSuperXP)
-	_Ini_Add("Pico GoblinXP", "SXTraining",  $irbSXTraining)
-	_Ini_Add("Pico GoblinXP", "SXBK", $ichkSXBK)
-	_Ini_Add("Pico GoblinXP", "SXAQ", $ichkSXAQ)
-	_Ini_Add("Pico GoblinXP", "SXGW", $ichkSXGW)
-	_Ini_Add("Pico GoblinXP", "MaxXptoGain", GUICtrlRead($txtMaxXPtoGain))
+	_Ini_Add("GoblinXP", "EnableSuperXP", $ichkEnableSuperXP)
+	_Ini_Add("GoblinXP", "SkipZoomOutXP", $ichkSkipZoomOutXP)
+	_Ini_Add("GoblinXP", "FastGoblinXP", $ichkFastGoblinXP)
+	_Ini_Add("GoblinXP", "SXTraining",  $irbSXTraining)
+	_Ini_Add("GoblinXP", "SXBK", $ichkSXBK)
+	_Ini_Add("GoblinXP", "SXAQ", $ichkSXAQ)
+	_Ini_Add("GoblinXP", "SXGW", $ichkSXGW)
+	_Ini_Add("GoblinXP", "MaxXptoGain", GUICtrlRead($txtMaxXPtoGain))
 
-EndFunc   ;==>SaveConfig_PicoMod
+	EndFunc   ;==>SaveConfig_PicoMod
 
 Func ApplyConfig_PicoMod($TypeReadSave)
 
@@ -211,6 +216,8 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			; ================================================== Super XP PART ================================================== ;
 
 			$ichkEnableSuperXP = GUICtrlRead($chkEnableSuperXP) = $GUI_CHECKED ? 1 : 0
+			$ichkSkipZoomOutXP = GUICtrlRead($chkSkipZoomOutXP) = $GUI_CHECKED ? 1 : 0
+			$ichkFastGoblinXP = GUICtrlRead($chkFastGoblinXP) = $GUI_CHECKED ? 1 : 0
 			$irbSXTraining = GUICtrlRead($rbSXTraining) = $GUI_CHECKED ? 1 : 2
 			$ichkSXBK = (GUICtrlRead($chkSXBK) = $GUI_CHECKED) ? $eHeroKing : $eHeroNone
 			$ichkSXAQ = (GUICtrlRead($chkSXAQ) = $GUI_CHECKED) ? $eHeroQueen : $eHeroNone
@@ -283,14 +290,12 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			; ================================================== Super XP PART ================================================== ;
 
 			GUICtrlSetState($chkEnableSuperXP, $ichkEnableSuperXP = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-
 			chkEnableSuperXP()
-
+			GUICtrlSetState($chkSkipZoomOutXP, $ichkSkipZoomOutXP = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($chkFastGoblinXP, $ichkFastGoblinXP = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($rbSXTraining, ($irbSXTraining = 1) ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($rbSXIAttacking, ($irbSXTraining = 2) ? $GUI_CHECKED : $GUI_UNCHECKED)
-
 			GUICtrlSetData($txtMaxXPtoGain, $itxtMaxXPtoGain)
-
 			GUICtrlSetState($chkSXBK, $ichkSXBK = $eHeroKing ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($chkSXAQ, $ichkSXAQ = $eHeroQueen ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($chkSXGW, $ichkSXGW = $eHeroWarden ? $GUI_CHECKED : $GUI_UNCHECKED)
