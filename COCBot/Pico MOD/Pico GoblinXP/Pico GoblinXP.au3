@@ -138,7 +138,7 @@ Func MainSuperXPHandler()
 	EndIf
 
 	$g_aiCurrentLoot[$eLootTrophy] = getTrophyMainScreen($aTrophies[0], $aTrophies[1]) ; get OCR to read current Village Trophies
-	; If $g_iDebugSetlog = 1 Then SetLog("Current Trophy Count: " & $g_aiCurrentLoot, $COLOR_DEBUG) ;Debug
+	; If $g_iDebugSetlog Then SetLog("Current Trophy Count: " & $g_aiCurrentLoot, $COLOR_DEBUG) ;Debug
 	If Number($g_aiCurrentLoot) > Number($g_iDropTrophyMax) Then Return
 
 	Local $aHeroResult = getArmyHeroCount(True, True)
@@ -535,7 +535,7 @@ Func PrepareSuperXPAttack()
 	_CaptureRegion2(0, 571 + $g_ibottomOffsetY, 859, 671 + $g_ibottomOffsetY)
 	Local $Plural = 0
 	Local $result = AttackBarCheck()
-	If $g_iDebugSetlog = 1 Then Setlog("DLL Troopsbar list: " & $result, $COLOR_DEBUG) ;Debug
+	If $g_iDebugSetlog Then Setlog("DLL Troopsbar list: " & $result, $COLOR_DEBUG) ;Debug
 	Local $aTroopDataList = StringSplit($result, "|")
 	Local $aTemp[12][3]
 	If $result <> "" Then
@@ -573,7 +573,7 @@ Func PrepareSuperXPAttack()
 
 	;ResumeAndroid()
 
-	If $g_iDebugSetlog = 1 Then Setlog("troopsnumber  = " & $troopsnumber)
+	If $g_iDebugSetlog Then Setlog("troopsnumber  = " & $troopsnumber)
 
 	$g_iKingSlot = -1
 	$g_iQueenSlot = -1
