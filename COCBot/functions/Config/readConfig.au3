@@ -1244,6 +1244,7 @@ Func ReadConfig_600_52_1()
 	$g_bQuickTrainArmy[0] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy1", "0") = "1")
 	$g_bQuickTrainArmy[1] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy2", "0") = "1")
 	$g_bQuickTrainArmy[2] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy3", "0") = "1")
+	$g_bChkMultiClick = (IniRead($g_sProfileConfigPath, "troop", "MultiClickArmy3", "0") = "1")
 EndFunc   ;==>ReadConfig_600_52_1
 
 Func ReadConfig_600_52_2()
@@ -1282,6 +1283,9 @@ Func ReadConfig_600_52_2()
 	$g_bForceBrewSpells = (IniRead($g_sProfileConfigPath, "other", "ChkForceBrewBeforeAttack", "0") = "1")
 	IniReadS($g_iTotalSpellValue, $g_sProfileConfigPath, "Spells", "SpellFactory", 0, "int")
 	$g_iTotalSpellValue = Int($g_iTotalSpellValue)
+
+	; DoubleTrain - Demen
+	$g_bDoubleTrain = (IniRead($g_sProfileConfigPath, "troop", "DoubleTrain", "0") = "1")
 EndFunc   ;==>ReadConfig_600_52_2
 
 Func ReadConfig_600_54()

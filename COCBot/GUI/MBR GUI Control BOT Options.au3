@@ -203,6 +203,183 @@ Func txtThreads()
 	EndIf
 EndFunc   ;==>txtThreads
 
+; #SWITCHACC FUNCTION# ==============================================================================================================
+Func chkSwitchAcc()
+	If GUICtrlRead($g_hChkSwitchAcc) = $GUI_CHECKED And aquireSwitchAccountMutex($g_iCmbSwitchAcc, False, True) Then
+		For $i = $g_hCmbTotalAccount To $g_ahChkDonate[7]
+			GUICtrlSetState($i, $GUI_ENABLE)
+		Next
+	Else
+		releaseSwitchAccountMutex()
+		For $i = $g_hCmbTotalAccount To $g_ahChkDonate[7]
+			GUICtrlSetState($i, $GUI_DISABLE)
+		Next
+	EndIf
+EndFunc   ;==>chkSwitchAcc
+
+Func cmbSwitchAcc()
+	Return _cmbSwitchAcc()
+EndFunc   ;==>cmbSwitchAcc
+
+Func _cmbSwitchAcc($bReadSaveConfig = True)
+	Static $s_bActive = False
+	If $s_bActive Then Return
+	$s_bActive = True
+	Local $iCmbSwitchAcc = _GUICtrlComboBox_GetCurSel($g_hCmbSwitchAcc)
+	Local $bAcquired = aquireSwitchAccountMutex($iCmbSwitchAcc, False, True)
+	Local $bEnable = False
+	If $iCmbSwitchAcc And $bAcquired Then
+		$bEnable = True
+	Else
+		If $g_iCmbSwitchAcc And $iCmbSwitchAcc = 0 Then
+			; No Switch Accounts selected, check if current profile was enabled and disable if so
+			For $i = 0 To UBound($g_ahChkDonate) - 7
+				If GUICtrlRead($g_ahChkAccount[$i]) = $GUI_CHECKED And GUICtrlRead($g_ahCmbProfile[$i]) = $g_sProfileCurrentName Then
+					SetLog("Disabled Profile " & $g_sProfileCurrentName & " in Group " & $g_iCmbSwitchAcc)
+					SetSwitchAccLog("Disabled Profile " & $g_sProfileCurrentName & " in Group " & $g_iCmbSwitchAcc)
+					GUICtrlSetState($g_ahChkAccount[$i], $GUI_UNCHECKED)
+					ExitLoop
+				EndIf
+			Next
+		EndIf
+		If $iCmbSwitchAcc And Not $bAcquired Then
+			$iCmbSwitchAcc = $g_iCmbSwitchAcc
+			_GUICtrlComboBox_SetCurSel($g_hCmbSwitchAcc, $iCmbSwitchAcc)
+			$bAcquired = aquireSwitchAccountMutex($iCmbSwitchAcc, False, True)
+			$bEnable = $bAcquired
+		EndIf
+	EndIf
+
+	; load selected config
+	If $bReadSaveConfig Then
+		If $g_iCmbSwitchAcc Then
+			; temp restore old selection for saving
+			SetLog("Save Switch Accounts Group " & $g_iCmbSwitchAcc)
+			SetSwitchAccLog("Save Group " & $g_iCmbSwitchAcc)
+			_GUICtrlComboBox_SetCurSel($g_hCmbSwitchAcc, $g_iCmbSwitchAcc)
+			SaveConfig_600_35_2()
+			_GUICtrlComboBox_SetCurSel($g_hCmbSwitchAcc, $iCmbSwitchAcc)
+		EndIf
+		$g_iCmbSwitchAcc = $iCmbSwitchAcc
+		If $g_iCmbSwitchAcc Then
+			SetLog("Read Switch Accounts Group " & $g_iCmbSwitchAcc)
+			SetSwitchAccLog("Read Group " & $g_iCmbSwitchAcc)
+		EndIf
+		ReadConfig_SwitchAccounts()
+		ApplyConfig_600_35_2("Read")
+	Else
+		$g_iCmbSwitchAcc = $iCmbSwitchAcc
+	EndIf
+
+	If $bEnable And GUICtrlRead($g_hChkSwitchAcc) = $GUI_UNCHECKED Then
+		$bEnable = False
+	EndIf
+
+	GUICtrlSetState($g_hChkSwitchAcc, (($bEnable Or ($iCmbSwitchAcc And $bAcquired)) ? $GUI_ENABLE : $GUI_DISABLE))
+	For $i = $g_hCmbTotalAccount To $g_ahChkDonate[7]
+		GUICtrlSetState($i, (($bEnable) ? $GUI_ENABLE : $GUI_DISABLE))
+	Next
+	cmbTotalAcc()
+	$s_bActive = False
+EndFunc   ;==>_cmbSwitchAcc
+
+Func cmbTotalAcc()
+	Local $iCmbTotalAcc = _GUICtrlComboBox_GetCurSel($g_hCmbTotalAccount) + 1 ; combobox data starts with 2
+	For $i = 0 To 7
+		If $iCmbTotalAcc >= 0 And $i <= $iCmbTotalAcc Then
+			_GUI_Value_STATE("SHOW", $g_ahChkAccount[$i] & "#" & $g_ahCmbProfile[$i] & "#" & $g_ahChkDonate[$i])
+		ElseIf $i > $iCmbTotalAcc Then
+			GUICtrlSetState($g_ahChkAccount[$i], $GUI_UNCHECKED)
+			_GUI_Value_STATE("HIDE", $g_ahChkAccount[$i] & "#" & $g_ahCmbProfile[$i] & "#" & $g_ahChkDonate[$i])
+		EndIf
+		chkAccount($i)
+	Next
+EndFunc   ;==>cmbTotalAcc
+
+Func chkSmartSwitch()
+	If GUICtrlRead($g_hChkSmartSwitch) = $GUI_CHECKED Then
+		GUICtrlSetState($g_hChkDonateLikeCrazy, $GUI_ENABLE)
+	Else
+		GUICtrlSetState($g_hChkDonateLikeCrazy, $GUI_UNCHECKED)
+		GUICtrlSetState($g_hChkDonateLikeCrazy, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkSmartSwitch
+
+Func chkAccount($i)
+	If GUICtrlRead($g_ahChkAccount[$i]) = $GUI_CHECKED Then
+		_GUI_Value_STATE("ENABLE", $g_ahCmbProfile[$i] & "#" & $g_ahChkDonate[$i])
+		SwitchAccountCheckProfileInUse($g_asProfileName[$i])
+	Else
+		;GUICtrlSetState($g_ahChkDonate[$i], $GUI_UNCHECKED)
+		_GUI_Value_STATE("DISABLE", $g_ahCmbProfile[$i] & "#" & $g_ahChkDonate[$i])
+	EndIf
+EndFunc   ;==>chkAccount
+
+Func chkAccountX()
+	For $i = 0 To UBound($g_ahChkAccount) - 1
+		If @GUI_CtrlId = $g_ahChkAccount[$i] Then
+			Return chkAccount($i)
+		EndIf
+	Next
+EndFunc   ;==>chkAccountX
+
+Func cmbSwitchAccProfile($i)
+	; check if switch with other
+	Local $sOldProfile = $g_asProfileName[$i]
+	Local $sNewProfile = GUICtrlRead($g_ahCmbProfile[$i])
+
+	SwitchAccountCheckProfileInUse($sNewProfile)
+
+	Local $sOthProfile
+	If $sNewProfile Then
+		For $j = 0 To UBound($g_ahCmbProfile) - 1
+			If $j <> $i Then
+				$sOthProfile = GUICtrlRead($g_ahCmbProfile[$j]) ; $g_asProfileName[$j]
+				If $sOthProfile = $sNewProfile Then
+					; switch
+					;_GUICtrlComboBox_SetCurSel($g_ahCmbProfile[$i], _GUICtrlComboBox_FindStringExact($g_ahCmbProfile[$i], $g_asProfileName[$i]))
+					;$g_asProfileName[$j] = ""
+					; clear other
+					;_GUICtrlComboBox_SetCurSel($g_ahCmbProfile[$j], 0)
+					; set other
+					$g_asProfileName[$j] = $sOldProfile
+					_GUICtrlComboBox_SetCurSel($g_ahCmbProfile[$j], _GUICtrlComboBox_FindStringExact($g_ahCmbProfile[$j], $sOldProfile))
+					ExitLoop
+				EndIf
+			EndIf
+		Next
+	EndIf
+	$g_asProfileName[$i] = $sNewProfile
+EndFunc   ;==>cmbSwitchAccProfile
+
+Func cmbSwitchAccProfileX()
+	For $i = 0 To UBound($g_ahCmbProfile) - 1
+		If @GUI_CtrlId = $g_ahCmbProfile[$i] Then
+			Return cmbSwitchAccProfile($i)
+		EndIf
+	Next
+EndFunc   ;==>cmbSwitchAccProfileX
+
+Func chkAccSwitchMode()
+	If GUICtrlRead($g_hRadSwitchGooglePlay) = $GUI_CHECKED Then
+		$g_bChkGooglePlay = True
+		$g_bChkSuperCellID = False
+		$g_bChkSharedPrefs = False
+	ElseIf GUICtrlRead($g_hRadSwitchSuperCellID) = $GUI_CHECKED Then
+		$g_bChkGooglePlay = False
+		$g_bChkSuperCellID = True
+		$g_bChkSharedPrefs = False
+	ElseIf GUICtrlRead($g_hRadSwitchSharedPrefs) = $GUI_CHECKED Then
+		$g_bChkGooglePlay = False
+		$g_bChkSuperCellID = False
+		$g_bChkSharedPrefs = True
+	Else
+		$g_bChkGooglePlay = False
+		$g_bChkSuperCellID = False
+		$g_bChkSharedPrefs = False
+	EndIf
+EndFunc   ;==>chkAccSwitchMode
+
 ; #DEBUG FUNCTION# ==============================================================================================================
 
 Func chkDebugSetLog()
