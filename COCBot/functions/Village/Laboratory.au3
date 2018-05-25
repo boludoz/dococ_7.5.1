@@ -460,3 +460,93 @@ Func LabTroopImages3() ; Debug function to record pixel values for page 2 of lab
 		SetLog("_GetPixelColor(+8, +59): " & _GetPixelColor($g_avLabTroops[$i][0] + 23, $g_avLabTroops[$i][1] + 60, True) & ":FFC360 =Max troop", $COLOR_DEBUG)
 	Next
 EndFunc   ;==>LabTroopImages3
+
+;================================= Pico Mod ===============================
+Func LabGuiDisplay() ; called from main loop to get an early status for indictors in bot bottom
+	If $g_bAutoLabUpgradeEnable = True Then ;  ====>>>> TODO : or use this or make a checkbox on GUI
+		;==========Hide Red  Show Green Hide Gray===
+		GUICtrlSetState($g_hPicLabGray, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabGreen, $GUI_SHOW)
+		;============================================
+Else
+	;CLOSE ARMY WINDOW
+	ClickP($aAway, 2, 0, "#0346") ;Click Away
+	If _Sleep(1500) Then Return ; Delay AFTER the click Away Prevents lots of coc restarts
+
+	;=================Section 2 Lab Gui
+
+	; make sure lab is located, if not locate lab
+	If $g_aiLaboratoryPos[0] <= 0 Or $g_aiLaboratoryPos[1] <= 0 Then
+		SetLog("Laboratory Location not found!", $COLOR_ERROR)
+		LocateLab() ; Lab location unknown, so find it.
+		If $g_aiLaboratoryPos[0] = 0 Or $g_aiLaboratoryPos[1] = 0 Then
+			SetLog("Problem locating Laboratory, train laboratory position before proceeding", $COLOR_ERROR)
+			;============Hide Red  Hide Green  Show Gray==
+			GUICtrlSetState($g_hPicLabGreen, $GUI_HIDE)
+			GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+			GUICtrlSetState($g_hPicLabGray, $GUI_SHOW)
+			;============================================
+			Return
+		EndIf
+	EndIf
+	BuildingClickP($g_aiLaboratoryPos, "#0197") ;Click Laboratory
+
+	If _Sleep($DELAYLABORATORY3) Then Return ; Wait for window to open
+	; Find Research Button
+	Local $offColors[4][3] = [[0x708CB0, 37, 34], [0x603818, 50, 43], [0xD5FC58, 61, 8], [0x000000, 82, 0]] ; 2nd pixel Blue blade, 3rd pixel brown handle, 4th pixel Green cross, 5th black button edge
+	Local $ButtonPixel = _MultiPixelSearch(433, 565 + $g_iBottomOffsetY, 562, 619 + $g_iBottomOffsetY, 1, 1, Hex(0x000000, 6), $offColors, 30) ; Black pixel of button edge
+	If IsArray($ButtonPixel) Then
+		If $g_bDebugSetlog Then
+			SetDebugLog("ButtonPixel = " & $ButtonPixel[0] & ", " & $ButtonPixel[1], $COLOR_DEBUG) ;Debug
+			SetDebugLog("#1: " & _GetPixelColor($ButtonPixel[0], $ButtonPixel[1], True) & ", #2: " & _GetPixelColor($ButtonPixel[0] + 37, $ButtonPixel[1] + 34, True) & ", #3: " & _GetPixelColor($ButtonPixel[0] + 50, $ButtonPixel[1] + 43, True) & ", #4: " & _GetPixelColor($ButtonPixel[0] + 61, $ButtonPixel[1] + 8, True), $COLOR_DEBUG)
+		EndIf
+		If $g_bDebugImageSave Then DebugImageSave("LabUpgrade") ; Debug Only
+		Click($ButtonPixel[0] + 40, $ButtonPixel[1] + 25, 1, 0, "#0198") ; Click Research Button
+		If _Sleep($DELAYLABORATORY1) Then Return ; Wait for window to open
+	Else
+		Setlog("Trouble finding research button, try again...", $COLOR_WARNING)
+		ClickP($aAway, 2, $DELAYLABORATORY4, "#0199")
+		;===========Hide Red  Hide Green  Show Gray==
+		GUICtrlSetState($g_hPicLabGreen, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabGray, $GUI_SHOW)
+		;===========================================
+		Return
+	EndIf
+
+	; check for upgrade in process - look for green in finish upgrade with gems button
+	If _ColorCheck(_GetPixelColor(625, 266 + $g_iMidOffsetY, True), Hex(0x6CB91D, 6), 20) Or _ColorCheck(_GetPixelColor(660, 266 + $g_iMidOffsetY, True), Hex(0x6CB91D, 6), 20) Or _ColorCheck(_GetPixelColor(730, 200, True), Hex(0xA2CB6C, 6), 20) Then
+		SetLog("Laboratory is Running. ", $COLOR_INFO)
+		;==========Hide Red  Show Green Hide Gray===
+		GUICtrlSetState($g_hPicLabGray, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabGreen, $GUI_SHOW)
+		;===========================================
+		If _Sleep($DELAYLABORATORY2) Then Return
+		ClickP($aAway, 2, $DELAYLABORATORY4, "#0359")
+		Return True
+	ElseIf _ColorCheck(_GetPixelColor(730, 200, True), Hex(0x8088B0, 6), 20) Then ; Look for light purple in upper right corner of lab window.
+		SetLog("Laboratory has Stopped", $COLOR_INFO)
+		ClickP($aAway, 2, $DELAYLABORATORY4, "#0359")
+		;========Show Red  Hide Green  Hide Gray=====
+		GUICtrlSetState($g_hPicLabGray, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabGreen, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabRed, $GUI_SHOW)
+		;============================================
+		ClickP($aAway, 2, $DELAYLABORATORY4, "#0359")
+		$g_bAutoLabUpgradeEnable = False ;reset enable lab upgrade flag
+		Return
+	Else
+		SetLog("Unable to determine Lab Status", $COLOR_INFO)
+		ClickP($aAway, 2, $DELAYLABORATORY4, "#0359")
+		;========Hide Red  Hide Green  Show Gray======
+		GUICtrlSetState($g_hPicLabGreen, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabRed, $GUI_HIDE)
+		GUICtrlSetState($g_hPicLabGray, $GUI_SHOW)
+		;=============================================
+		Return
+	EndIf
+EndIf
+EndFunc   ;==>LabGuiDisplay
+;========================== PICO MOD ========================

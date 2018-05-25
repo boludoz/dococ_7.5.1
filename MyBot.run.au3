@@ -29,6 +29,9 @@
 ; Enforce variable declarations
 Opt("MustDeclareVars", 1)
 
+Global $g_sBotVersion = "v7.5.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $g_sModversion = "v3.7.2" ;<== Just Change This to Version Number
+Global $g_sModSupportUrl = "https://mybot.run/forums/index.php?/topic/27601-mybotrun-dococ-v352/&" ;<== Our Website Link Or Link Download
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()
 Global $g_hFrmBot = 0 ; The main GUI window
 
@@ -69,7 +72,7 @@ $g_iTGLastRemote = $g_sTGLast_UID           ; PICO MOD
 MainLoop(CheckPrerequisites())
 
 Func UpdateBotTitle()
-	Local $sTitle = "My Bot " & $g_sBotVersion
+	Local $sTitle = "My Bot " & $g_sBotVersion & " - Pico MOD " & $g_sModversion & " "
 	Local $sConsoleTitle ; Console title has also Android Emulator Name
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
@@ -380,7 +383,7 @@ Func InitializeMBR(ByRef $sAI, $bConfigRead)
 
 	; multilanguage
 	If Not FileExists(@ScriptDir & "\Languages") Then DirCreate(@ScriptDir & "\Languages")
-	;DetectLanguage()
+	DetectLanguage()
 	_ReadFullIni()
 	; must be called after language is detected
 	TranslateTroopNames()
@@ -798,13 +801,9 @@ Func runBot() ;Bot that runs everything in order
             EndIf
             ;============================================
 
-            ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-            AutoUpgrade()
-            ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-
             MainSuperXPHandler()
 
-			Local $aRndFuncList = ['Laboratory', 'UpgradeHeroes', 'UpgradeBuilding', 'BuilderBase']
+			Local $aRndFuncList = ['Laboratory', 'LabCheck', 'UpgradeHeroes', 'UpgradeBuilding', 'BuilderBase'] ; PICO MOD
 			While 1
 				If $g_bRunState = False Then Return
 				If $g_bRestart = True Then ContinueLoop 2 ; must be level 2 due to loop-in-loop
@@ -831,7 +830,6 @@ Func runBot() ;Bot that runs everything in order
 				;$g_bFullArmy1 = $g_bFullArmy
 				If _Sleep($DELAYRUNBOT3) Then Return
 				If $g_bRestart = True Then ContinueLoop
-
 				If $g_iCommandStop <> 0 And $g_iCommandStop <> 3 Then
 					AttackMain()
 					$g_bSkipFirstZoomout = False
@@ -1225,7 +1223,9 @@ Func _RunFunction($action)
 		Case "RequestCC"
 			RequestCC()
 			If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
-
+		Case "LabCheck"
+			Setlog("Checking Lab Status", $COLOR_INFO)
+			LabGuiDisplay()
 		Case "Laboratory"
 			Laboratory()
 			If _Sleep($DELAYRUNBOT3) = False Then checkMainScreen(False)
