@@ -15,21 +15,6 @@
 
 Func ReadConfig_PicoMod()
 
-	IniReadS($g_iChkRequestUnicode, $g_sProfileConfigPath, "Pico Unicode", "ChkRequestUnicode", $g_iChkRequestUnicode, "Int")
-
-	; ================================================== SWITCH ACCOUNT PART ================================================== ;
-
-	IniReadS($g_ichkSwitchAccount, $g_sSwitchAccountConfig, "Pico Switch Account", "chkEnableSwitchAccount", $g_ichkSwitchAccount, "Int")
-	IniReadS($g_icmbAccountsQuantity, $g_sSwitchAccountConfig, "Pico Switch Account", "cmbAccountsQuantity", $g_icmbAccountsQuantity, "Int")
-	For $i = 1 To 8
-		IniReadS($g_iachkCanUse[$i], $g_sSwitchAccountConfig, "Pico Switch Account", "chkCanUse[" & $i & "]", $g_iachkCanUse[$i], "Int")
-		IniReadS($g_iachkDonateAccount[$i], $g_sSwitchAccountConfig, "Pico Switch Account", "chkDonateAccount[" & $i & "]", $g_iachkDonateAccount[$i], "Int")
-		IniReadS($g_iacmbAccount[$i], $g_sSwitchAccountConfig, "Pico Switch Account", "cmbAccount[" & $i & "]", $g_iacmbAccount[$i], "Int")
-		If $g_iacmbAccount[$i] = -1 Then $g_iacmbAccount[$i] = 0
-	Next
-	IniReadS($g_icmbMaxStayDelay, $g_sSwitchAccountConfig, "Pico Switch Account", "cmbMaxStayDelay", $g_icmbMaxStayDelay, "Int")
-	IniReadS($g_icmbMinDelayToSwitch, $g_sSwitchAccountConfig, "Pico Switch Account", "cmbMinDelayToSwitch", $g_icmbMinDelayToSwitch, "Int")
-
 	; ================================================== TREASURY COLLECT PART ================================================== ;
 
 	IniReadS($g_ichkEnableTrCollect, $g_sProfileConfigPath, "Pico Treasury Collect", "chkEnableTrCollect", $g_ichkEnableTrCollect, "Int")
@@ -87,18 +72,6 @@ Func SaveConfig_PicoMod()
 	ApplyConfig_PicoMod(GetApplyConfigSaveAction())
 
 	_Ini_Add("Pico Unicode", "ChkRequestUnicode", $g_iChkRequestUnicode ? 1 : 0)
-
-	; ================================================== SWITCH ACCOUNT PART ================================================== ;
-
-	IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "chkEnableSwitchAccount", $g_ichkSwitchAccount)
-	IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "cmbAccountsQuantity", $g_icmbAccountsQuantity)
-	For $i = 1 To 8
-		IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "chkCanUse[" & $i & "]", $g_iachkCanUse[$i])
-		IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "chkDonateAccount[" & $i & "]", $g_iachkDonateAccount[$i])
-		IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "cmbAccount[" & $i & "]", $g_iacmbAccount[$i])
-	Next
-	IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "cmbMaxStayDelay", $g_icmbMaxStayDelay)
-	IniWrite($g_sSwitchAccountConfig, "Pico Switch Account", "cmbMinDelayToSwitch", $g_icmbMinDelayToSwitch)
 
 	; ================================================== TREASURY COLLECT PART ================================================== ;
 
@@ -159,20 +132,6 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 
 		Case "Save"
 
-			$g_iChkRequestUnicode = GUICtrlRead($g_hChkRequestUnicode) = $GUI_CHECKED ? 1 : 0
-
-			; ================================================== SWITCH ACCOUNT PART ================================================== ;
-
-			$g_ichkSwitchAccount = GUICtrlRead($chkEnableSwitchAccount) = $GUI_CHECKED ? 1 : 0
-			$g_icmbAccountsQuantity = _GUICtrlComboBox_GetCurSel($g_cmbAccountsQuantity)
-			For $i = 1 To 8
-				$g_iachkCanUse[$i] = GUICtrlRead($g_achkCanUse) = $GUI_CHECKED ? 1 : 0
-				$g_iachkDonateAccount[$i] = GUICtrlRead($g_achkDonateAccount) = $GUI_CHECKED ? 1 : 0
-				$g_iacmbAccount[$i] = _GUICtrlComboBox_GetCurSel($g_acmbAccount[$i])
-			Next
-			$g_icmbMaxStayDelay = _GUICtrlComboBox_GetCurSel($g_cmbMaxStayDelay)
-			$g_icmbMinDelayToSwitch = _GUICtrlComboBox_GetCurSel($g_cmbMinDelayToSwitch)
-
 			; ================================================== TREASURY COLLECT PART ================================================== ;
 
 			$g_ichkEnableTrCollect = GUICtrlRead($g_chkEnableTrCollect) = $GUI_CHECKED ? 1 : 0
@@ -225,23 +184,6 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			$itxtMaxXPtoGain = Int(GUICtrlRead($txtMaxXPtoGain))
 
 		Case "Read"
-
-			GUICtrlSetState($g_hChkRequestUnicode, $g_iChkRequestUnicode = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-
-			; ================================================== SWITCH ACCOUNT PART ================================================== ;
-
-			GUICtrlSetState($chkEnableSwitchAccount, $g_ichkSwitchAccount = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			_GUICtrlComboBox_SetCurSel($g_cmbAccountsQuantity, $g_icmbAccountsQuantity)
-			For $i = 1 To 8
-				GUICtrlSetState($g_achkCanUse[$i], $g_iachkCanUse[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-				GUICtrlSetState($g_achkDonateAccount[$i], $g_iachkDonateAccount[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-				_GUICtrlComboBox_SetCurSel($g_acmbAccount[$i], $g_iacmbAccount[$i])
-			Next
-			_GUICtrlComboBox_SetCurSel($g_cmbMaxStayDelay, $g_icmbMaxStayDelay)
-			_GUICtrlComboBox_SetCurSel($g_cmbMinDelayToSwitch, $g_icmbMinDelayToSwitch)
-			cmbMaxStayDelay()
-			cmbMinDelayToSwitch()
-			chkSwitchAccount()
 
 			; ================================================== TREASURY COLLECT PART ================================================== ;
 

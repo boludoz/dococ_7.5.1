@@ -1936,12 +1936,11 @@ Func tabBot()
 			GUISetState(@SW_HIDE, $g_hGUI_STATS)
 			GUISetState(@SW_HIDE, $g_hGUI_LOG_SA)
 			ControlHide("", "", $g_hCmbGUILanguage)
-		;Case $tabidx = 3 ; Profiles tab                      ; PICO MOD
-		;	GUISetState(@SW_HIDE, $g_hGUI_STATS)              ; PICO MOD
-		;	GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG_SA)   ; PICO MOD
-		;	ControlHide("", "", $g_hCmbGUILanguage)           ; PICO MOD
-		;Case $tabidx = 4 ; Stats tab                         ; PICO MOD
-		Case $tabidx = 3 ; Stats tab
+		Case $tabidx = 3 ; Profiles tab
+			GUISetState(@SW_HIDE, $g_hGUI_STATS)
+			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG_SA)
+			ControlHide("", "", $g_hCmbGUILanguage)
+		Case $tabidx = 4 ; Stats tab
 			GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_STATS)
 			GUISetState(@SW_HIDE, $g_hGUI_LOG_SA)
 			If Not $g_bRunState Then UpdateMultiStats()

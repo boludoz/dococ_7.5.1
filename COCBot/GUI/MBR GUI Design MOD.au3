@@ -81,9 +81,8 @@ Func CreateMODTab()
 
 	GUISwitch($g_hGUI_MOD)
 	$g_hGUI_MOD_TAB = GUICtrlCreateTab(0, 0, $g_iSizeWGrpTab1, $g_iSizeHGrpTab1, BitOR($TCS_SINGLELINE, $TCS_RIGHTJUSTIFY))
-	$g_hGUI_MOD_TAB_ITEM1 = GUICtrlCreateTabItem("Profiles")
-	CreateBotProfiles()
-	TabItem1()
+	;$g_hGUI_MOD_TAB_ITEM1 = GUICtrlCreateTabItem("Profiles")
+	;CreateBotProfiles()
 	$g_hGUI_MOD_TAB_ITEM3 = GUICtrlCreateTabItem("Treasury")
 	TabItem3()
 	$g_hGUI_MOD_TAB_ITEM2 = GUICtrlCreateTabItem("Humanization")
@@ -101,123 +100,6 @@ Func CreateMODTab()
 
 EndFunc   ;==>CreateMODTab
 
-; ITEM TABS ZONE
-Func TabItem1()
-
-	Local $x = 11, $z = 189, $w = 357, $y = 85
-
-	GUICtrlCreateGroup("Smart Switch Accounts", $x, $y, 430, 330)
-
-	$x += 10
-	$y += 20
-
-	$chkEnableSwitchAccount = GUICtrlCreateCheckbox("Use Smart Switch Accounts", $x, $y, 152, 17)
-	GUICtrlSetOnEvent(-1, "chkSwitchAccount")
-	$lblNB = GUICtrlCreateLabel("Number of accounts on Emulator :", $x + 195, $y + 2, 165, 17)
-	$g_cmbAccountsQuantity = GUICtrlCreateCombo("", $x + 365, $y - 2, 45, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "cmbAccountsQuantity")
-	GUICtrlSetData(-1, "2|3|4|5|6|7|8", "2")
-
-	$y += 35
-
-	$g_achkCanUse[1] = GUICtrlCreateCheckbox("Use Account 1 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[1] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[1] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[2] = GUICtrlCreateCheckbox("Use Account 2 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[2] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[2] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[3] = GUICtrlCreateCheckbox("Use Account 3 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[3] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[3] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[4] = GUICtrlCreateCheckbox("Use Account 4 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[4] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[4] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[5] = GUICtrlCreateCheckbox("Use Account 5 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[5] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[5] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[6] = GUICtrlCreateCheckbox("Use Account 6 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[6] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[6] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[7] = GUICtrlCreateCheckbox("Use Account 7 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[7] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[7] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-
-	$y += 30
-
-	$g_achkCanUse[8] = GUICtrlCreateCheckbox("Use Account 8 with Profile :", $x, $y, 150, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_acmbAccount[8] = GUICtrlCreateCombo("", $z, $y - 2, 145, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	$g_achkDonateAccount[8] = GUICtrlCreateCheckbox("Donate only", $w, $y, 77, 17)
-	GUICtrlSetOnEvent(-1, "chkAccountsProperties")
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-	setupProfileComboBox()
-	;PopulatePresetComboBox()
-
-	$y += 35
-
-	GUICtrlCreateLabel("Stay on Accounts max", $x, $y + 2, -1, 17)
-	$g_cmbMaxStayDelay = GUICtrlCreateCombo("", $x + 110, $y - 2, 45, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetData(-1, "20|25|30|35|40|45|50|55|60", "30")
-	_GUICtrlSetTip(-1, "That will force Switch Account to Switch, even if Army is ready when delay is exceeded." & @CRLF & _
-					   "That is useful if you are in higher league, where search delay is very long, so, when attack" & @CRLF & _
-					   "is finished, you army is always ready, so Switch Account never Switch to another account." & @CRLF & _
-					   "This setting allow to prevent that to happens, by force switching after selected delay.")
-	GUICtrlSetOnEvent(-1, "cmbMaxStayDelay")
-	GUICtrlCreateLabel("mins", $x + 160, $y + 2, -1, 17)
-
-	$x += 200
-
-	GUICtrlCreateLabel("Don't switch if Train Delay <", $x, $y + 2, -1, 17)
-	$g_cmbMinDelayToSwitch = GUICtrlCreateCombo("", $x + 138, $y - 2, 45, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetData(-1, "1|2|3|4|5|8|10|15", "3")
-	_GUICtrlSetTip(-1, "That will prevent Switch Account to Switch if remaining train delay for current account is short." & @CRLF & _
-					   "Warning: this setting is overwritten by Max Stay on Account delay. If remaining train delay is" & @CRLF & _
-					   "short but Max Stay on Account delay is exceeded, Switch Account will go to next account anyway...")
-	GUICtrlSetOnEvent(-1, "cmbMinDelayToSwitch")
-	$g_lblEndSwitchAccount = GUICtrlCreateLabel("mins", $x + 188, $y + 2, -1, 17)
-
-EndFunc   ;==>TabItem1
 
 Func TabItem2()
 

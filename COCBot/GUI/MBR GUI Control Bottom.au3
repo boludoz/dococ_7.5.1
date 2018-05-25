@@ -173,11 +173,6 @@ Func btnStop()
 		; always invoked in MyBot.run.au3!
 		EnableControls($g_hFrmBotBottom, False, $g_aFrmBotBottomCtrlState)
 		$g_bRunState = False ; Exit BotStart()
-
-        ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-        $g_bFirstInit = True ; to force Switch Account init after restart ; SWITCH
-        ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-
 	EndIf
 	$g_iBotAction = $eBotStop
 EndFunc   ;==>btnStop

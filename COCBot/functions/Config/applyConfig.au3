@@ -138,9 +138,9 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 
 	; <><><><> Attack Plan / Strategies <><><><>
 	; <<< nothing here >>>
-	
+
 ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-    ApplyConfig_PicoMod($TypeReadSave) ; SWITCH
+    ApplyConfig_PicoMod($TypeReadSave)
 ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
 
 
@@ -2000,7 +2000,7 @@ Func ApplyConfig_600_35_2($TypeReadSave)
 				GUICtrlSetState($g_ahChkDonate[$i], $g_abDonateOnly[$i] ? $GUI_CHECKED : $GUI_UNCHECKED)
 			Next
 			_GUICtrlComboBox_SetCurSel($g_hCmbTrainTimeToSkip, $g_iTrainTimeToSkip)
-			_cmbSwitchAcc(False)
+			;_cmbSwitchAcc(False)
 		Case "Save"
 			$g_iCmbSwitchAcc = _GUICtrlComboBox_GetCurSel($g_hCmbSwitchAcc)
 			$g_bChkSwitchAcc = (GUICtrlRead($g_hChkSwitchAcc) = $GUI_CHECKED)

@@ -627,7 +627,7 @@ Func MainLoop($bCheckPrerequisitesOK = True)
 
 	While 1
 		_Sleep($DELAYSLEEP, True, False)
-		
+
         If $g_bRunState = False And ($g_bNotifyPBEnable = True Or $g_bNotifyTGEnable = True) And $g_bNotifyRemoteEnable = True Then  ; PICO MOD
             NotifyRemoteControlProcBtnStart()                                                                                        ; PICO MOD
         EndIf                                                                                                                        ; PICO MOD
@@ -664,16 +664,6 @@ EndFunc   ;==>MainLoop
 
 Func runBot() ;Bot that runs everything in order
 	Local $iWaitTime
-	
-    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-    ; if Emulator is MEmu, is necessary to make the emulator ready to be used with Unicode send text
-    If $g_sAndroidEmulator = "MEmu" and $g_iChkRequestUnicode = 1 Then
-        Setlog("Setting the Emulator for Unicode, please wait!",$COLOR_INFO)
-        prepareAndroidForUnicodeText()
-    EndIf
-    If $g_bFirstInit Then SwitchAccount(True)
-    ; ================================================== ADDITION BY ROROTITI - PICO MOD ================================================== ;
-
 
 	InitiateSwitchAcc()
 	If ProfileSwitchAccountEnabled() And $g_bReMatchAcc Then
@@ -784,13 +774,13 @@ Func runBot() ;Bot that runs everything in order
 				EndIf
 			EndIf
 
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 
             ;===========Ezeck 6-14-2017=================
             ;when 'train/donate only' is the condition.. and camps fill. and func idle is never called (it happens)... donates never happen because of IsSearchAttackEnabled
