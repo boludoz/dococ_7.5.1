@@ -26,16 +26,36 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 
 	Local $iBegin = __TimerInit()
 
+	Global $g_iMultiplicando = 0
+	Global $g_iDelayt = 0
+	Global $g_g_iDelayr = 0
+
+Func _SleepMod()
+	
+	$g_iMultiplicando = 2
+	$g_iDelayt = $g_iMultiplicando * $g_iDelay
+	$g_g_iDelayr = Random($g_iDelay, $g_iDelayt)
+	If $g_bDebugClick Then SetLog("Default _sleep : " & $g_iDelay & " - Random _sleep : " & $g_g_iDelayr, $COLOR_ORANGE)
+
+	If $g_bTrainAddRandomDelayEnable = False Then Return
+
+	$g_g_iDelayr = $g_iDelay
+	If $g_bDebugClick Then SetLog("Default _sleep : " & $g_g_iDelayr, $COLOR_ORANGE)
+
+EndFunc
+
+Func _Sleep($g_iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+	
 	If $b_Sleep_Active = True Then
 		; ups, prevent bad recursion
 		#cs Disabled for now, maybe fix Pause button state and re-activate
-			Local $iRemaining = $iDelay - __TimerDiff($iBegin)
+			Local $iRemaining = $g_iDelayr - __TimerDiff($iBegin)
 			While $iRemaining > 0
 			DllCall($g_hLibNTDLL, "dword", "ZwYieldExecution")
 			If $CheckRunState = True And $g_bRunState = False Then
 			Return True
 			EndIf
-			$iRemaining = $iDelay - __TimerDiff($iBegin)
+			$iRemaining = $g_iDelayr - __TimerDiff($iBegin)
 			If $iRemaining >= $DELAYSLEEP Then
 			_SleepMilli($DELAYSLEEP)
 			Else
@@ -58,7 +78,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 			$g_bMoveDivider = False
 		EndIf
 
-		If $iDelay > 0 And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout Then
+		If $g_iDelayr > 0 And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout Then
 
 			; Notify stuff
 			If $g_bNotifyDeleteAllPushesNow = True Then PushMsg("DeleteAllPBMessages") ; only when button is pushed, and only when on a sleep cyle
@@ -97,7 +117,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 		$b_Sleep_Active = False
 		Return True
 	EndIf
-	Local $iRemaining = $iDelay - __TimerDiff($iBegin)
+	Local $iRemaining = $g_iDelayr - __TimerDiff($iBegin)
 	While $iRemaining > 0
 		DllCall($g_hLibNTDLL, "dword", "ZwYieldExecution")
 		If $CheckRunState = True And $g_bRunState = False Then
@@ -125,7 +145,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 				CheckPostponedLog()
 			EndIf
 		EndIf
-		$iRemaining = $iDelay - __TimerDiff($iBegin)
+		$iRemaining = $g_iDelayr - __TimerDiff($iBegin)
 		If $iRemaining >= $DELAYSLEEP Then
 			_SleepMilli($DELAYSLEEP)
 		Else

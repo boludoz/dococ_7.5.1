@@ -533,10 +533,10 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eIcnCCSpells, $eIcnSpellsGroup, $eBahasaIND, $eChinese_S, $eChinese_T, $eEnglish, $eFrench, $eGerman, $eItalian, $ePersian, _
 		$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean, $eAzerbaijani, _
 		$eArabic, $eIcnBuilderHall, $eIcnClockTower, $eIcnElixirCollectorL5, $eIcnGemMine, $eIcnGoldMineL5, _
-		$eIcnProfileSwitch, $eIcnChat, $eIcnTarget, $eIcnSettings, $eIcnRepeat, $eIcnClan, $eIcnBrain, $eIcnPMOD, $eIcnCoin, _
+		$eIcnChat, $eIcnTarget, $eIcnSettings, $eIcnRepeat, $eIcnClan, $eIcnBrain, $eIcnPMOD, $eIcnCoin, _; ADDITION BY EZECK - PICO MOD
         $eIcnGrayShield, $eIcnBlueShield, $eIcnGreenShield, $eIcnRedShield, _; ADDITION BY EZECK - PICO MOD
         $eIcnGoblinXP ; ADDITION BY ROROTITI - PICO MOD
-;14
+;13
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
