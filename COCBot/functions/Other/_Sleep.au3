@@ -30,14 +30,10 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 	Local $iDelay_t = 0
 	Local $iDelayr = 0
 
-	
 	$iMultiplicando = 2
 	$iDelayr = $iMultiplicando * $iDelay
 	$iDelay_t = Random($iDelay, $iDelayr)
-	If $bDebugClick Then SetLog("Default _sleep : " & $iDelay & " - Random _sleep : " & $g_iDelayr, $COLOR_ORANGE)
-
-
-Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+	If $bDebugClick Then SetLog("Default _sleep : " & $iDelay & " - Random _sleep : " & $iDelay_t, $COLOR_ORANGE)
 
 	If $b_Sleep_Active = True Then
 		; ups, prevent bad recursion
