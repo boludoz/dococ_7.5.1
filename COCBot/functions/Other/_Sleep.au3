@@ -1,7 +1,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _Sleep
 ; Description ...:
-; Syntax ........: _FSleep($iDelay[, $iSleep = True])
+; Syntax ........: _Sleep($iDelay[, $iSleep = True])
 ; Parameters ....: $iDelay              - an integer value.
 ;                  $iSleep              - [optional] an integer value. Default is True. unused and deprecated
 ;                  $$CheckRunState      - Exit and returns True if $g_bRunState is False
@@ -16,7 +16,27 @@
 ; ===============================================================================================================================
 #include-once
 
-Func _FSleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+Func _Sleep($iDelay_t, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+	; !!! Not original function but randomization calculation which is linked to original function renamed _Fsleep !!!
+	; !!! Still compatible with all original function parameters !!!
+If $g_ichkUseRandomSleep = 1 Then
+	Switch $iDelay_t
+		Case 100
+			Local $iDelay = 100
+		Case 1000
+			Local $iDelay = 1000
+    Case Else
+		Local $iDelay = Random($iDelay_t, $g_iMultiplicando * $iDelay_t)
+	EndSwitch
+	Else
+			Local $iDelay
+			$iDelay = $iDelay_t
+EndIf
+
+	;If $g_bDebugSleep Or TestCapture() Then
+		SetLog("Delay " & $iDelay & "," & $iSleep & "," & $CheckRunState & "," & $SleepWhenPaused, $COLOR_ACTION, "Verdana", "7.5", 0)
+	;EndIf
+
 	Static $hTimer_SetTime = 0
 	Static $hTimer_PBRemoteControlInterval = 0
 	Static $hTimer_PBDeleteOldPushesInterval = 0
@@ -48,7 +68,7 @@ Func _FSleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = 
 
 	$b_Sleep_Active = True
 
-	debugGdiHandle("_FSleep")
+	debugGdiHandle("_Sleep")
 	CheckBotRequests() ; check if bot window should be moved, minized etc.
 
 	If SetCriticalMessageProcessing() = False Then
@@ -107,7 +127,7 @@ Func _FSleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = 
 		EndIf
 		If SetCriticalMessageProcessing() = False Then
 			If $g_bBotPaused And $SleepWhenPaused And $g_bTogglePauseAllowed Then TogglePauseSleep() ; Bot is paused
-			If $g_bTogglePauseUpdateState Then TogglePauseUpdateState("_FSleep") ; Update Pause GUI states
+			If $g_bTogglePauseUpdateState Then TogglePauseUpdateState("_Sleep") ; Update Pause GUI states
 			If $g_bMakeScreenshotNow = True Then
 				If $g_bScreenshotPNGFormat = False Then
 					MakeScreenshot($g_sProfileTempPath, "jpg")
@@ -135,7 +155,7 @@ Func _FSleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = 
 	WEnd
 	$b_Sleep_Active = False
 	Return False
-EndFunc   ;==>_FSleep
+EndFunc   ;==>_Sleep
 
 Func _SleepMicro($iMicroSec)
 	DllStructSetData($g_hStruct_SleepMicro, "time", $iMicroSec * -10)

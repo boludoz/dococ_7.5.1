@@ -38,7 +38,7 @@ Global $g_cmbMaxStayDelay = 0, $g_cmbMinDelayToSwitch = 0
 Global $g_lblEndSwitchAccount
 
 ; ================================================== BOT HUMANIZATION PART ================================================== ;
-Global $g_chkUseBotHumanization = 0, $g_chkUseAltRClick = 0, $g_acmbPriority = 0, $g_challengeMessage = 0, $g_ahumanMessage
+Global $g_chkUseBotHumanization = 0, $g_chkUseAltRClick = 0, $g_acmbPriority = 0, $g_challengeMessage = 0, $g_ahumanMessage, $g_chkUseRandomSleep = 0
 Global $g_Label1 = 0, $g_Label2 = 0, $g_Label3 = 0, $g_Label4 = 0
 Global $g_Label5 = 0, $g_Label6 = 0, $g_Label7 = 0, $g_Label8 = 0
 Global $g_Label9 = 0, $g_Label10 = 0, $g_Label11 = 0, $g_Label12 = 0
@@ -206,6 +206,12 @@ Func TabItem2()
 	$g_chkLookAtRedNotifications = GUICtrlCreateCheckbox("Look at red/purple flags on buttons", $x + 240, $y, 187, 17)
 	GUICtrlSetOnEvent(-1, "chkLookAtRedNotifications")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
+	
+	$y += 25
+
+	$g_chkUseRandomSleep = GUICtrlCreateCheckbox("Make _Sleep random", $x + 25, $y + 25, 25, 25)
+	GUICtrlSetOnEvent(-1, "chkUseRandomSleep")
+	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
@@ -214,7 +220,7 @@ Func TabItem2()
 	Next
 
 	chkUseBotHumanization()
-
+	
 EndFunc   ;==>TabItem2
 
 Func TabItem3()
@@ -261,7 +267,7 @@ Func TabItem3()
 	$g_chkFullDarkTrCollect = GUICtrlCreateCheckbox("When full", $x + 370, $y + 78, 67, 17)
 	GUICtrlSetOnEvent(-1, "chkFullResTrCollect")
 	_GUICtrlSetTip(-1, "When your Dark level in Treasury is full, it will colect it to empty Treasury")
-
+	
 	chkEnableTrCollect()
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
