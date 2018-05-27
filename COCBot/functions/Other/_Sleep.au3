@@ -1,7 +1,7 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _Sleep
 ; Description ...:
-; Syntax ........: _Sleep($iDelay_t[, $iSleep = True])
+; Syntax ........: _FSleep($iDelay[, $iSleep = True])
 ; Parameters ....: $iDelay              - an integer value.
 ;                  $iSleep              - [optional] an integer value. Default is True. unused and deprecated
 ;                  $$CheckRunState      - Exit and returns True if $g_bRunState is False
@@ -16,7 +16,7 @@
 ; ===============================================================================================================================
 #include-once
 
-Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+Func _FSleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
 	Static $hTimer_SetTime = 0
 	Static $hTimer_PBRemoteControlInterval = 0
 	Static $hTimer_PBDeleteOldPushesInterval = 0
@@ -26,25 +26,16 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 
 	Local $iBegin = __TimerInit()
 
-	Local $iMultiplicando = 0
-	Local $iDelay_t = 0
-	Local $iDelayr = 0
-
-	$iMultiplicando = 2
-	$iDelayr = $iMultiplicando * $iDelay
-	$iDelay_t = Random($iDelay, $iDelayr)
-	If $bDebugClick Then SetLog("Default _sleep : " & $iDelay & " - Random _sleep : " & $iDelay_t, $COLOR_ORANGE)
-
 	If $b_Sleep_Active = True Then
 		; ups, prevent bad recursion
 		#cs Disabled for now, maybe fix Pause button state and re-activate
-			Local $iRemaining = $iDelay_t - __TimerDiff($iBegin)
+			Local $iRemaining = $iDelay - __TimerDiff($iBegin)
 			While $iRemaining > 0
 			DllCall($g_hLibNTDLL, "dword", "ZwYieldExecution")
 			If $CheckRunState = True And $g_bRunState = False Then
 			Return True
 			EndIf
-			$iRemaining = $iDelay_t - __TimerDiff($iBegin)
+			$iRemaining = $iDelay - __TimerDiff($iBegin)
 			If $iRemaining >= $DELAYSLEEP Then
 			_SleepMilli($DELAYSLEEP)
 			Else
@@ -57,7 +48,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 
 	$b_Sleep_Active = True
 
-	debugGdiHandle("_Sleep")
+	debugGdiHandle("_FSleep")
 	CheckBotRequests() ; check if bot window should be moved, minized etc.
 
 	If SetCriticalMessageProcessing() = False Then
@@ -67,7 +58,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 			$g_bMoveDivider = False
 		EndIf
 
-		If $iDelay_t > 0 And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout Then
+		If $iDelay > 0 And __TimerDiff($g_hTxtLogTimer) >= $g_iTxtLogTimerTimeout Then
 
 			; Notify stuff
 			If $g_bNotifyDeleteAllPushesNow = True Then PushMsg("DeleteAllPBMessages") ; only when button is pushed, and only when on a sleep cyle
@@ -106,7 +97,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 		$b_Sleep_Active = False
 		Return True
 	EndIf
-	Local $iRemaining = $iDelay_t - __TimerDiff($iBegin)
+	Local $iRemaining = $iDelay - __TimerDiff($iBegin)
 	While $iRemaining > 0
 		DllCall($g_hLibNTDLL, "dword", "ZwYieldExecution")
 		If $CheckRunState = True And $g_bRunState = False Then
@@ -116,7 +107,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 		EndIf
 		If SetCriticalMessageProcessing() = False Then
 			If $g_bBotPaused And $SleepWhenPaused And $g_bTogglePauseAllowed Then TogglePauseSleep() ; Bot is paused
-			If $g_bTogglePauseUpdateState Then TogglePauseUpdateState("_Sleep") ; Update Pause GUI states
+			If $g_bTogglePauseUpdateState Then TogglePauseUpdateState("_FSleep") ; Update Pause GUI states
 			If $g_bMakeScreenshotNow = True Then
 				If $g_bScreenshotPNGFormat = False Then
 					MakeScreenshot($g_sProfileTempPath, "jpg")
@@ -134,7 +125,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 				CheckPostponedLog()
 			EndIf
 		EndIf
-		$iRemaining = $iDelay_t - __TimerDiff($iBegin)
+		$iRemaining = $iDelay - __TimerDiff($iBegin)
 		If $iRemaining >= $DELAYSLEEP Then
 			_SleepMilli($DELAYSLEEP)
 		Else
@@ -144,7 +135,7 @@ Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = T
 	WEnd
 	$b_Sleep_Active = False
 	Return False
-EndFunc   ;==>_Sleep
+EndFunc   ;==>_FSleep
 
 Func _SleepMicro($iMicroSec)
 	DllStructSetData($g_hStruct_SleepMicro, "time", $iMicroSec * -10)

@@ -66,13 +66,33 @@ Func GemClick($x, $y, $times = 1, $speed = 0, $debugtxt = "")
 
 EndFunc   ;==>GemClick
 
+Func _Sleep($iDelay, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
+
+	; !!! Not original function but randomization calculation which is linked to original function renamed _Fsleep !!!
+	; !!! Still compatible with all original function parameters !!!
+If $g_ichkUseAltRClick = 1 Then
+	Switch $iDelay
+    Case 100
+		_FSleep($iDelay, $iSleep, $CheckRunState, $SleepWhenPaused)
+    Case Else
+		Local $iMultiplicando = 2
+		Local $iDelay_t = Random($iDelay, $iMultiplicando * $iDelay, 1)
+		_FSleep($iDelay_t, $iSleep, $CheckRunState, $SleepWhenPaused)
+		If $g_bDebugClick Then SetLog("Default _sleep : " & $iDelay & " - Random _sleep : " & $iDelay_t, $COLOR_ORANGE)
+EndSwitch
+	Else
+		_FSleep($iDelay, $iSleep, $CheckRunState, $SleepWhenPaused)
+		If $g_bDebugClick Then SetLog("Default _sleep : " & $iDelay, $COLOR_ORANGE)
+	EndIf
+EndFunc   ;==>_Sleep
+
 ; Func randomSleep($SleepTime, $Range = 0)
-; 	If $g_bRunState = False Then Return
-; 	If $Range = 0 Then $Range = Round($SleepTime / 5)
-; 	Local $SleepTimeF = Random($SleepTime - $Range, $SleepTime + $Range, 1)
-; 	If $g_iDebugClick = 1 Then Setlog("Default sleep : " & $SleepTime & " - Random sleep : " & $SleepTimeF, $COLOR_ORANGE)
-; 	If _Sleep($SleepTimeF) Then Return
-; 
+;     If $g_bRunState = False Then Return
+;     If $Range = 0 Then $Range = Round($SleepTime / 5)
+;     Local $SleepTimeF = Random($SleepTime - $Range, $SleepTime + $Range, 1)
+;     If $g_iDebugClick = 1 Then Setlog("Default sleep : " & $SleepTime & " - Random sleep : " & $SleepTimeF, $COLOR_ORANGE)
+;     If _Sleep($SleepTimeF) Then Return
+;
 ; EndFunc   ;==>randomSleep
 
 ; ================================================== HUMAN FUNCTIONS PART ================================================== ;
