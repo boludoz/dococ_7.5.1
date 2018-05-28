@@ -34,6 +34,7 @@ Func ReadConfig_PicoMod()
 	IniReadS($g_ichkUseBotHumanization, $g_sProfileConfigPath, "Pico Bot Humanization", "chkUseBotHumanization", $g_ichkUseBotHumanization, "Int")
 	IniReadS($g_ichkUseAltRClick, $g_sProfileConfigPath, "Pico Bot Humanization", "chkUseAltRClick", $g_ichkUseAltRClick, "Int")
 	IniReadS($g_ichkUseRandomSleep, $g_sProfileConfigPath, "Pico Bot Humanization", "chkUseRandomSleep", $g_ichkUseRandomSleep, "Int")
+	IniReadS($g_ichkUseRandomSleepDbg, $g_sProfileConfigPath, "Pico Bot Humanization", "chkUseRandomSleepDbg", $g_ichkUseRandomSleepDbg, "Int")
 	IniReadS($g_ichkCollectAchievements, $g_sProfileConfigPath, "Pico Bot Humanization", "chkCollectAchievements", $g_ichkCollectAchievements, "Int")
 	IniReadS($g_ichkLookAtRedNotifications, $g_sProfileConfigPath, "Pico Bot Humanization", "chkLookAtRedNotifications", $g_ichkLookAtRedNotifications, "Int")
 	For $i = 0 To 12
@@ -50,6 +51,8 @@ Func ReadConfig_PicoMod()
 	Next
 	IniReadS($g_icmbMaxActionsNumber, $g_sProfileConfigPath, "Pico Bot Humanization", "cmbMaxActionsNumber", $g_icmbMaxActionsNumber, "Int")
 	IniReadS($g_ichallengeMessage, $g_sProfileConfigPath, "Pico Bot Humanization", "challengeMessage", $g_ichallengeMessage)
+
+	IniReadS($icmb_SleepMult, $g_sProfileConfigPath, "Pico Bot Humanization", "cmb_SleepMult", $icmb_SleepMult, "Int")
 
 	; ================================================== CSV SPEED PART ================================================== ;
 
@@ -93,6 +96,7 @@ Func SaveConfig_PicoMod()
 	_Ini_Add("Pico Bot Humanization", "chkUseBotHumanization", $g_ichkUseBotHumanization)
 	_Ini_Add("Pico Bot Humanization", "chkUseAltRClick", $g_ichkUseAltRClick)
 	_Ini_Add("Pico Bot Humanization", "chkUseRandomSleep", $g_ichkUseRandomSleep)
+	_Ini_Add("Pico Bot Humanization", "UseRandomSleepDbg", $g_ichkUseRandomSleepDbg)
 	_Ini_Add("Pico Bot Humanization", "chkCollectAchievements", $g_ichkCollectAchievements)
 	_Ini_Add("Pico Bot Humanization", "chkLookAtRedNotifications", $g_ichkLookAtRedNotifications)
 	For $i = 0 To 12
@@ -109,6 +113,8 @@ Func SaveConfig_PicoMod()
 	Next
 	_Ini_Add("Pico Bot Humanization", "cmbMaxActionsNumber", _GUICtrlComboBox_GetCurSel($g_cmbMaxActionsNumber))
 	_Ini_Add("Pico Bot Humanization", "challengeMessage", GUICtrlRead($g_challengeMessage))
+
+	_Ini_Add("Pico Bot Humanization", "cmb_SleepMult", _GUICtrlComboBox_GetCurSel($cmb_SleepMult))
 
 	; ================================================== CSV SPEED PART ================================================== ;
 
@@ -153,6 +159,7 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			$g_ichkUseBotHumanization = GUICtrlRead($g_chkUseBotHumanization) = $GUI_CHECKED ? 1 : 0
 			$g_ichkUseAltRClick = GUICtrlRead($g_chkUseAltRClick) = $GUI_CHECKED ? 1 : 0
 			$g_ichkUseRandomSleep = GUICtrlRead($g_chkUseRandomSleep) = $GUI_CHECKED ? 1 : 0
+			$g_ichkUseRandomSleepDbg = GUICtrlRead($g_chkUseRandomSleepDbg) = $GUI_CHECKED ? 1 : 0
 			$g_ichkCollectAchievements = GUICtrlRead($g_chkCollectAchievements) = $GUI_CHECKED ? 1 : 0
 			$g_ichkLookAtRedNotifications = GUICtrlRead($g_chkLookAtRedNotifications) = $GUI_CHECKED ? 1 : 0
 			For $i = 0 To 12
@@ -169,6 +176,8 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			Next
 			$g_icmbMaxActionsNumber = _GUICtrlComboBox_GetCurSel($g_icmbMaxActionsNumber)
 			$g_ichallengeMessage = GUICtrlRead($g_challengeMessage)
+
+			$icmb_SleepMult = _GUICtrlComboBox_GetCurSel($cmb_SleepMult)
 
 			; ================================================== CSV SPEED PART ================================================== ;
 
@@ -208,6 +217,7 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			GUICtrlSetState($g_chkUseBotHumanization, $g_ichkUseBotHumanization = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_chkUseAltRClick, $g_ichkUseAltRClick = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_chkUseRandomSleep, $g_ichkUseRandomSleep = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_chkUseRandomSleepDbg, $g_ichkUseRandomSleepDbg = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_chkCollectAchievements, $g_ichkCollectAchievements = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_chkLookAtRedNotifications, $g_ichkLookAtRedNotifications = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkUseBotHumanization()
@@ -227,6 +237,7 @@ Func ApplyConfig_PicoMod($TypeReadSave)
 			GUICtrlSetData($g_challengeMessage, $g_ichallengeMessage)
 			cmbStandardReplay()
 			cmbWarReplay()
+			_GUICtrlComboBox_SetCurSel($cmb_SleepMult, $icmb_SleepMult)
 
 			; ================================================== CSV SPEED PART ================================================== ;
 

@@ -38,7 +38,7 @@ Global $g_cmbMaxStayDelay = 0, $g_cmbMinDelayToSwitch = 0
 Global $g_lblEndSwitchAccount
 
 ; ================================================== BOT HUMANIZATION PART ================================================== ;
-Global $g_chkUseBotHumanization = 0, $g_chkUseAltRClick = 0, $g_acmbPriority = 0, $g_challengeMessage = 0, $g_ahumanMessage, $g_chkUseRandomSleep = 0
+Global $g_chkUseBotHumanization = 0, $g_chkUseAltRClick = 0, $g_acmbPriority = 0, $g_challengeMessage = 0, $g_ahumanMessage, $g_chkUseRandomSleep = 0, $g_chkUseRandomSleepDbg = 0
 Global $g_Label1 = 0, $g_Label2 = 0, $g_Label3 = 0, $g_Label4 = 0
 Global $g_Label5 = 0, $g_Label6 = 0, $g_Label7 = 0, $g_Label8 = 0
 Global $g_Label9 = 0, $g_Label10 = 0, $g_Label11 = 0, $g_Label12 = 0
@@ -103,7 +103,7 @@ EndFunc   ;==>CreateMODTab
 
 Func TabItem2()
 
-	GUICtrlCreateGroup("Settings", 5, 25, 442, 360)
+	GUICtrlCreateGroup("Settings", 5, 25, 442, 400)
 
 	Local $x = 0, $y = 20
 
@@ -207,12 +207,24 @@ Func TabItem2()
 	GUICtrlSetOnEvent(-1, "chkLookAtRedNotifications")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 	
-	$y += 25
+	$y += 20
 
-	$g_chkUseRandomSleep = GUICtrlCreateCheckbox("Make _Sleep random", $x + 25, $y + 25, 25, 25)
+	$g_chkUseRandomSleep = GUICtrlCreateCheckbox("Make _Sleep random", $x + 0, $y + 0, 0, 0)
 	GUICtrlSetOnEvent(-1, "chkUseRandomSleep")
 	GUICtrlSetState(-1, $GUI_UNCHECKED)
 
+	$y += 20
+
+	GUICtrlCreateLabel("_Sleep multiplier", $x - 2, $y, -1, -1)
+		$cmb_SleepMult = GUICtrlCreateCombo("", $x + 122, $y - 5, 50, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+	GUICtrlSetData(-1, "1.25x|1.5x|2x|3x", "1.25x")
+
+	$x += 200
+	
+	$g_chkUseRandomSleepDbg = GUICtrlCreateCheckbox("_Sleep random Dbg", $x + 0, $y + 0, 0, 0)
+	GUICtrlSetOnEvent(-1, "chkUseRandomSleepDbg")
+	GUICtrlSetState(-1, $GUI_UNCHECKED)
+			  
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	For $i = $g_Label1 To $g_chkLookAtRedNotifications

@@ -17,8 +17,6 @@
 #include-once
 
 Func _Sleep($iDelay_t, $iSleep = True, $CheckRunState = True, $SleepWhenPaused = True)
-	; !!! Not original function but randomization calculation which is linked to original function renamed _Fsleep !!!
-	; !!! Still compatible with all original function parameters !!!
 If $g_ichkUseRandomSleep = 1 Then
 	Switch $iDelay_t
 		Case 100
@@ -26,16 +24,16 @@ If $g_ichkUseRandomSleep = 1 Then
 		Case 1000
 			Local $iDelay = 1000
     Case Else
-		Local $iDelay = Random($iDelay_t, $g_iMultiplicando * $iDelay_t)
+		Local $iDelay = Random($iDelay_t, $iDelay_t * $g_fMultiplicando, 1)
 	EndSwitch
 	Else
 			Local $iDelay
 			$iDelay = $iDelay_t
 EndIf
 
-	;If $g_bDebugSleep Or TestCapture() Then
-		SetLog("Delay " & $iDelay & "," & $iSleep & "," & $CheckRunState & "," & $SleepWhenPaused, $COLOR_ACTION, "Verdana", "7.5", 0)
-	;EndIf
+If $g_bDebugSleep Or TestCapture() Then
+	SetLog("StatusRandom, "  & $g_ichkUseRandomSleep & ", X " & $g_fMultiplicando & ", Delay " & $iDelay & "," & $iSleep & "," & $CheckRunState & "," & $SleepWhenPaused, $COLOR_ACTION, "Verdana", "7.5", 0)
+EndIf
 
 	Static $hTimer_SetTime = 0
 	Static $hTimer_PBRemoteControlInterval = 0

@@ -219,6 +219,17 @@ Func chkUseRandomSleep()
 		EndIf
 EndFunc   ;==>chkUseRandomSleep
 
+Func chkUseRandomSleepDbg()
+	If GUICtrlRead($g_chkUseRandomSleepDbg) = $GUI_CHECKED Then
+		$g_ichkUseRandomSleepDbg = 1
+		$g_bDebugSleep = 1
+		Else
+		$g_ichkUseRandomSleepDbg = 0
+		$g_bDebugSleep = 0
+			GUICtrlSetState($g_chkUseRandomSleepDbg, $GUI_UNCHECKED)
+		EndIf
+EndFunc   ;==>chkUseRandomSleepDbg
+
 Func chkCollectAchievements()
 	If GUICtrlRead($g_chkCollectAchievements) = $GUI_CHECKED Then
 		$g_ichkCollectAchievements = 1
